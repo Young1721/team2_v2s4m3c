@@ -15,6 +15,7 @@
         <ul class="util">
           <li><A class='top_menu_link'  href='${pageContext.request.contextPath}/member/login.do' >로그인</A></li>
           <li><a href="${pageContext.request.contextPath}/member/create.do">회원가입</a></li>
+          <li><A class='top_menu_link'  href='${pageContext.request.contextPath}/member/logout.do' >Logout</A><span class='top_menu_sep'>&nbsp;</span></li>
         </ul>
       </div>
     </div>

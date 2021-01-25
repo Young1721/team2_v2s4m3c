@@ -41,13 +41,11 @@
   $(function() { // 자동 실행
     // -------------------- 댓글 관련 시작 --------------------
     var frm_product_reply = $('#frm_product_reply');
-    $('#product_reply_content', frm_product_reply).on('click', check_login);  // 댓글 작성시 로그인 여부 확인
+    $('#product_description', frm_product_reply).on('click', check_login);  // 댓글 작성시 로그인 여부 확인
     $('#btn_create', frm_product_reply).on('click', product_reply_create);  // 댓글 작성시 로그인 여부 확인
 
     list_by_product_no_join(); // 댓글 목록
-    // list_by_contentsno_join_add(); // 댓글 페이징 지원 목록, 동시 접속시 페이징 문제 있음.
 
-    // $("#btn_add").on("click", list_by_contentsno_join_add); // 더보기 버튼 이벤트 등록, 페이징 문제 있음.
     $("#btn_add").on("click", list_by_product_no_join_add_pg); // 더보기 버튼 이벤트 등록
     // -------------------- 댓글 관련 종료 --------------------
     
@@ -58,7 +56,7 @@
     var frm_product_reply = $('#frm_product_reply');
     if ($('#member_no', frm_product_reply).val().length == 0 ) {
       $('#modal_product_name').html('댓글 등록'); // 제목 
-      $('#modal_product_reply_content').html("로그인해야 등록 할 수 있습니다."); // 내용
+      $('#modal_product_description').html("로그인해야 등록 할 수 있습니다."); // 내용
       $('#modal_panel').modal();            // 다이얼로그 출력
       return false;  // 실행 종료
     }
