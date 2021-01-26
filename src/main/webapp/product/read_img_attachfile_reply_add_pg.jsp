@@ -371,45 +371,46 @@
       <input type="hidden" name="product_no" value="${product_no}">
       <fieldset class="fieldset">
         <ul>
-          <li class="li_none" style='border-bottom: solid 1px #AAAAAA;'>
-            <span>${productVO.product_name}</span>
-            (<span>${productVO.product_recom}</span>)
-            <span>${productVO.product_rdate.substring(0, 16)}</span>
-          </li>
-          
-          <%-- ********** 첨부 파일 이미지 목록 출력 시작 ********** --%>
-          <li class="li_none">
-            <DIV id='product_attachfile_panel' style="width: 70%; margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
-          </li>
-          <li class="li_none" style='text-align: center;' >
-            <c:set var="product_file1" value="${productVO.product_file1.toLowerCase() }" />
-            <c:if test="${product_file1.endsWith('jpg') || product_file1.endsWith('png') || product_file1.endsWith('gif')}">
-              <A href="javascript:panel_img('./storage/main_images/', '${productVO.product_file1 }')"><IMG src='./storage/main_images/${productVO.product_thumb1 }' style='margin-top: 2px; width: 120px; height: 80px;'></A>
-            </c:if>
-            
-            <c:forEach var="product_attachfileVO" items="${product_attachfile_list }">
-              <c:set var="product_attachfile_thumb" value="${product_attachfileVO.product_attachfile_thumb.toLowerCase() }" />
-              
-              <c:choose>
-                <c:when test="${product_attachfile_thumb.endsWith('jpg') || product_attachfile_thumb.endsWith('png') || product_attachfile_thumb.endsWith('gif')}">
-                  <A href="javascript:panel_img('../product_attachfile/storage/', '${product_attachfileVO.product_attachfile_fname }')"><IMG src='../product_attachfile/storage/${product_attachfileVO.product_attachfile_thumb }' style='margin-top: 2px; width: 120px; height: 80px;'></A>
-                </c:when>
-              </c:choose>
-            </c:forEach>
-          </li>
-          <%-- ********** 첨부 파일 이미지 목록 출력 종료 ********** --%>
+          <DIV style='width: 80%; margin: 0px auto;'>
+            <%-- ********** 첨부 파일 이미지 목록 출력 시작 ********** --%>
+            <ASIDE class="aside_left">
+                <li class="li_none">
+                  <DIV id='product_attachfile_panel' style="width: 70%; margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
+                </li>
+                <li class="li_none" style='text-align: center;' >
+                  <c:set var="product_file1" value="${productVO.product_file1.toLowerCase() }" />
+                  <c:if test="${product_file1.endsWith('jpg') || product_file1.endsWith('png') || product_file1.endsWith('gif')}">
+                    <A href="javascript:panel_img('./storage/main_images/', '${productVO.product_file1 }')"><IMG src='./storage/main_images/${productVO.product_thumb1 }' style='margin-top: 2px; width: 120px; height: 80px;'></A>
+                  </c:if>
+                  
+                  <c:forEach var="product_attachfileVO" items="${product_attachfile_list }">
+                    <c:set var="product_attachfile_thumb" value="${product_attachfileVO.product_attachfile_thumb.toLowerCase() }" />
                     
-          <li class="li_none">
-            <DIV>${productVO.product_description }</DIV>
-          </li>                    
+                    <c:choose>
+                      <c:when test="${product_attachfile_thumb.endsWith('jpg') || product_attachfile_thumb.endsWith('png') || product_attachfile_thumb.endsWith('gif')}">
+                        <A href="javascript:panel_img('../product_attachfile/storage/', '${product_attachfileVO.product_attachfile_fname }')"><IMG src='../product_attachfile/storage/${product_attachfileVO.product_attachfile_thumb }' style='margin-top: 2px; width: 120px; height: 80px;'></A>
+                      </c:when>
+                    </c:choose>
+                  </c:forEach>
+                </li>
+                <%-- ********** 첨부 파일 이미지 목록 출력 종료 ********** --%>
+            </ASIDE>    
+            <li class="li_none" style='border-bottom: solid 1px #AAAAAA;'>
+              <h3><span>${productVO.product_name}</span></h3>
+              (<span>${productVO.product_recom}</span>)
+              <span>${productVO.product_rdate.substring(0, 16)}</span>
+            </li>     
+            <li class="li_none">
+              <DIV>${productVO.product_cost } 원</DIV>
+              <DIV>${productVO.product_description }</DIV>
+            </li>                    
+            
           
-        
-        </ul>
-      </fieldset>
-  </FORM>
+          </ul>
+        </fieldset>
+    </FORM>
 
   <!-- ---------- 댓글 영역 시작 ---------- -->
-  <DIV style='width: 80%; margin: 0px auto;'>
       <HR>
       <FORM name='frm_product_reply' id='frm_product_reply'> <%-- 댓글 등록 폼 --%>
           <input type='hidden' name='product_no' id='product_no' value='${product_no}'>
