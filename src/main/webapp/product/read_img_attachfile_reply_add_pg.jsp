@@ -41,7 +41,7 @@
   $(function() { // 자동 실행
     // -------------------- 댓글 관련 시작 --------------------
     var frm_product_reply = $('#frm_product_reply');
-    $('#product_description', frm_product_reply).on('click', check_login);  // 댓글 작성시 로그인 여부 확인
+    $('#product_reply_content', frm_product_reply).on('click', check_login);  // 댓글 작성시 로그인 여부 확인
     $('#btn_create', frm_product_reply).on('click', product_reply_create);  // 댓글 작성시 로그인 여부 확인
 
     list_by_product_no_join(); // 댓글 목록
@@ -55,8 +55,8 @@
   function check_login() {
     var frm_product_reply = $('#frm_product_reply');
     if ($('#member_no', frm_product_reply).val().length == 0 ) {
-      $('#modal_product_name').html('댓글 등록'); // 제목 
-      $('#modal_product_description').html("로그인해야 등록 할 수 있습니다."); // 내용
+      $('#modal_title').html('댓글 등록'); // 제목 
+      $('#modal_content').html("로그인해야 등록 할 수 있습니다."); // 내용
       $('#modal_panel').modal();            // 다이얼로그 출력
       return false;  // 실행 종료
     }
@@ -77,8 +77,8 @@
       // return;
       
       if ($('#product_reply_content', frm_product_reply).val().length > 300) {
-        $('#modal_product_name').html('댓글 등록'); // 제목 
-        $('#modal_product_reply_content').html("댓글 내용은 300자이상 입력 할 수 없습니다."); // 내용
+        $('#modal_title').html('댓글 등록'); // 제목 
+        $('#modal_content').html("댓글 내용은 300자이상 입력 할 수 없습니다."); // 내용
         $('#modal_panel').modal();           // 다이얼로그 출력
         return;  // 실행 종료
       }
@@ -117,8 +117,8 @@
             msg = "댓글 등록에 실패했습니다.";
           }
           
-          $('#modal_product_name').html('댓글 등록'); // 제목 
-          $('#modal_product_reply_content').html(msg);     // 내용
+          $('#modal_title').html('댓글 등록'); // 제목 
+          $('#modal_content').html(msg);     // 내용
           $('#modal_panel').modal();           // 다이얼로그 출력
         },
         // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 

@@ -111,7 +111,7 @@ PRODUCT_NO PRODUCTTYPE_NO PRODUCT_NAME                                          
 
 -- ªË¡¶  
 DELETE FROM product
-WHERE product_no = 2;
+WHERE product_no = 1;
 
 SELECT COUNT(*) as passwd_cnt
 FROM product
