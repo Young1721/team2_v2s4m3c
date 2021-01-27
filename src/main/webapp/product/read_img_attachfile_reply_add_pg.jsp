@@ -401,19 +401,17 @@ tag += "</A>";
                 </li>
                 <%-- ********** 첨부 파일 이미지 목록 출력 종료 ********** --%>
             </ASIDE>    
-            <li class="li_none" style='border-bottom: solid 1px #AAAAAA;'>
+            <li class="li_none">
               <h3><span>${productVO.product_name}</span></h3>
               (<span>${productVO.product_recom}</span>)
               <span>${productVO.product_rdate.substring(0, 16)}</span>
-            </li>     
-            <li class="li_none">
               <DIV>${productVO.product_cost } 원</DIV>
-              <DIV>${productVO.product_description }</DIV>
             </li>                    
             
           
           </ul>
         </fieldset>
+      <DIV>${productVO.product_description }</DIV>
     </FORM>
 
   <!-- ---------- 댓글 영역 시작 ---------- -->
