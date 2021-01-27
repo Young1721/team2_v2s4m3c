@@ -26,7 +26,7 @@
 <script type="text/javascript">
 // 첨부 이미지 출력, dir: ../attachfile/storage/, ./storage/main_images/
 var tag = "<A href=\"javascript: $('#product_attachfile_panel').hide();\">";
-tag +=  "  <IMG src='../product_attachfile/storage/${productVO.product_file1.toLowerCase() }' style='width: 200px; height: 200px;'>";
+tag +=  "  <IMG src='../product/storage/main_images/${productVO.product_file1.toLowerCase() }' style='width: 200px; height: 200px;'>";
 tag += "</A>";
   function panel_img(dir, file) {
     tag = "";
@@ -142,11 +142,11 @@ tag += "</A>";
 
   // Reply class 선언
   // {"memberno":3,"rdate":"2020-12-17 15:16:16.0","passwd":"18","replyno":32,"id":"user1","content":"18","contentsno":53}
-  function Product_reply(member_no, product_reply_rdate, product_reply_no, id, product_reply_content, product_no) {
+  function Product_reply(member_no, product_reply_rdate, product_reply_no, member_id, product_reply_content, product_no) {
     this.member_no = member_no;
     this.product_reply_rdate = product_reply_rdate;
     this.product_reply_no = product_reply_no;
-    this.id = id;
+    this.member_id = member_id;
     this.product_reply_content = product_reply_content;
     this.product_no = product_no;
   }
@@ -171,7 +171,7 @@ tag += "</A>";
         for (i=0; i < rdata.list.length; i++) {
           var row = rdata.list[i];
           // alert(row.replyno);
-          var product_reply = new Product_reply(row.member_no, row.product_reply_rdate, row.product_reply_no, row.id, row.product_reply_content, row.product_no); // 객체 생성
+          var product_reply = new Product_reply(row.member_no, row.product_reply_rdate, row.product_reply_no, row.member_id, row.product_reply_content, row.product_no); // 객체 생성
           global_rdata.push(product_reply); // 배열에 저장
         }
 
@@ -203,7 +203,7 @@ tag += "</A>";
       var row = global_rdata[i]; // 배열에서 글 1건 산출
           
       msg += "<DIV id='"+row.product_reply_no+"' style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px;'>";
-      msg += "<span style='font-weight: bold;'>" + row.id + "</span>";
+      msg += "<span style='font-weight: bold;'>" + row.member_id + "</span>";
       msg += "  " + row.product_reply_rdate;
       if ('${sessionScope.member_no}' == row.member_no) { // 글쓴이 일치여부 확인, 본인의 글만 삭제 가능함 ★
         msg += " <A href='javascript:reply_delete("+row.product_reply_no+")'><IMG src='./images/delete.png'></A>";
@@ -346,7 +346,7 @@ tag += "</A>";
     <A href='./list.do?productgrp_no=${productgrp_no }&product_word=${param.product_word }&nowPage=${param.nowPage}'>목록</A>
 
     <%-- 글을 등록한 회원만 메뉴 출력 --%>
-    <c:if test="${sessionScope.member_no == productVO.member_no or sessionScope.id_admin ne null }">
+    <c:if test="${sessionScope.member_no == productVO.member_no or sessionScope.member_id_admin ne null }">
       <%-- 글을 등록한 회원임. ${sessionScope.memberno} / ${productVO.memberno } --%>
       <c:choose>
         <c:when test="${productVO.product_file1.trim().length() > 0 }">
@@ -385,9 +385,9 @@ tag += "</A>";
                 </li>
                 <li class="li_none" style='text-align: center;' >
                   <c:set var="product_file1" value="${productVO.product_file1.toLowerCase() }" />
-<%--                   <c:if test="${product_file1.endsWith('jpg') || product_file1.endsWith('png') || product_file1.endsWith('gif')}">
+                  <c:if test="${product_file1.endsWith('jpg') || product_file1.endsWith('png') || product_file1.endsWith('gif')}">
                     <A href="javascript:panel_img('./storage/main_images/', '${productVO.product_file1 }')"><IMG src='./storage/main_images/${productVO.product_thumb1 }' style='margin-top: 2px; width: 100px; height: 100px;'></A>
-                  </c:if> --%>
+                  </c:if>
                   
                   <c:forEach var="product_attachfileVO" items="${product_attachfile_list }">
                     <c:set var="product_attachfile_thumb" value="${product_attachfileVO.product_attachfile_thumb.toLowerCase() }" />

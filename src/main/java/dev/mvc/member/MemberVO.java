@@ -1,126 +1,252 @@
 package dev.mvc.member;
- 
+
+import org.springframework.web.multipart.MultipartFile;
+
+/*
+CREATE TABLE member(
+    member_no                     NUMBER(10)     NOT NULL,
+    member_id                     VARCHAR2(50)     NOT NULL,
+    member_passwd                 VARCHAR2(50)     NOT NULL,
+    member_nickname               VARCHAR2(50)     NOT NULL,
+    member_name                   VARCHAR2(50)     NULL ,
+    member_isAdult                VARCHAR2(50)     NOT NULL,
+    member_tel                    VARCHAR2(50)     NOT NULL,
+    member_email                  VARCHAR2(100)    NULL ,
+    member_rdate                  DATE             NOT NULL,
+    member_zipcode                VARCHAR2(200)    NOT NULL,
+    member_address1                VARCHAR2(200)     NOT NULL,
+    member_address2                VARCHAR2(200)     NOT NULL,
+    member_profilepic                VARCHAR2(200)     NULL,
+    memberlevel_no                NUMBER(10)     NOT NULL,
+    auth_no                       NUMBER(10)         NOT NULL,
+    snslogin_no                   NUMBER(10)     NOT NULL,
+    PRIMARY KEY(member_no),
+    FOREIGN KEY (auth_no) REFERENCES auth (auth_no),
+    FOREIGN KEY (memberlevel_no) REFERENCES memberlevel (memberlevel_no),
+    FOREIGN KEY (snslogin_no) REFERENCES snslogin (snslogin_no)
+);
+ */
 public class MemberVO {
   /*
-  memberno INT NOT NULL AUTO_INCREMENT, -- È¸ï¿½ï¿½ ï¿½ï¿½È£, ï¿½ï¿½ï¿½Úµå¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ã·ï¿½ 
-  id           VARCHAR(20)   NOT NULL UNIQUE, -- ï¿½ï¿½ï¿½Ìµï¿½, ï¿½ßºï¿½ ï¿½Èµï¿½, ï¿½ï¿½ï¿½Úµå¸¦ ï¿½ï¿½ï¿½ï¿½ 
-  passwd    VARCHAR(20)   NOT NULL, -- ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-  mname    VARCHAR(20)   NOT NULL, -- ï¿½ï¿½ï¿½ï¿½, ï¿½Ñ±ï¿½ 10ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-  tel          VARCHAR(14)   NOT NULL, -- ï¿½ï¿½È­ï¿½ï¿½È£
-  zipcode   VARCHAR(5)        NULL, -- ï¿½ï¿½ï¿½ï¿½ï¿½È£, 12345
-  address1  VARCHAR(80)       NULL, -- ï¿½Ö¼ï¿½ 1
-  address2  VARCHAR(50)       NULL, -- ï¿½Ö¼ï¿½ 2
-  mdate     DATETIME            NOT NULL, -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½    
-  PRIMARY KEY (mno)             -- ï¿½Ñ¹ï¿½ ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ßºï¿½ ï¿½Èµï¿½ 
-  */
- 
-  /** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ */
+    SELECT l.memberlevel_no as level_no, l.memberlevel_name as level_name,
+           m.member_no, m.member_name
+    FROM memberlevel l, member m
+    WHERE m.memberlevel_no = l.memberlevel_no
+    ORDER BY l.memberlevel_no ASC, m.member_no ASC;
+   */
+  //--------------------------------------------------------
+  // Memberlevel Table
+  //--------------------------------------------------------
+  /** ºÎ¸ð Å×ÀÌºí µî±Þ ¹øÈ£*/
+  private int level_no;
+  /** ºÎ¸ð Å×ÀÌºí µî±Þ ÀÌ¸§*/
+  private String level_name;
+  
+  //--------------------------------------------------------
+  // Member Table
+  //--------------------------------------------------------
+  /** È¸¿ø¹øÈ£ */
   private int member_no;
-  /** ï¿½ï¿½ï¿½Ìµï¿½ */
-  private String id = "";
-  /** ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ */
-  private String passwd = "";
-  /** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
-  private String mname = "";
-  /** ï¿½ï¿½È­ ï¿½ï¿½È£ */
-  private String tel = "";
-  /** ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ */
-  private String zipcode = "";
-  /** ï¿½Ö¼ï¿½ 1 */
-  private String address1 = "";
-  /** ï¿½Ö¼ï¿½ 2 */
-  private String address2 = "";
-  /** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
-  private String mdate = "";
+  /** ID */
+  private String member_id = "";
+  /** ºñ¹Ð¹øÈ£ */
+  private String member_passwd = "";
+  /** ´Ð³×ÀÓ */
+  private String member_nickname = "";
+  /** ÀÌ¸§ */
+  private String member_name = "";
+  /** ÁÖ¹Îµî·Ï¹øÈ£ */
+  private String member_isAdult ="";
+  /** ÀüÈ­¹øÈ£ */
+  private String member_tel = "";
+  /** ÀÌ¸ÞÀÏ */
+  private String member_email = "";
+  /** °¡ÀÔÀÏ*/
+  private String member_rdate = "";
+  /** ¿ìÆí¹øÈ£ */
+  private String member_zipcode = "";
+  /** ÁÖ¼Ò1 */
+  private String member_address1 = "";
+  /** ÁÖ¼Ò2 */
+  private String member_address2 = "";
+  /** ÇÁ·ÎÇÊ»çÁø */
+  private String member_profilepic = "";
+  /** ÇÁ·ÎÇÊ»çÁø */
+  private String member_profilethumb = "";
+  /** ÀÌ¹ÌÁö MultipartFile */
+  private MultipartFile file1MF;
+
+  /** µî±Þ */
+  private int memberlevel_no = 1;
+  /** ±ÇÇÑ */
+  private int auth_no = 1;
+  /** SNS·Î±×ÀÎ*/
+  private int snslogin_no = 1;
   
-  /** ï¿½ï¿½Ïµï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ */
-  private String old_passwd = "";
-  /** id ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
-  private String id_save = "";
-  /** passwd ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
-  private String passwd_save = "";
-  /** ï¿½Ìµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½ï¿½ */
-  private String url_address = "";
-  
+  public MemberVO() {
+  }
+
+  public int getLevel_no() {
+    return level_no;
+  }
+
+  public void setLevel_no(int level_no) {
+    this.level_no = level_no;
+  }
+
+  public String getLevel_name() {
+    return level_name;
+  }
+
+  public void setLevel_name(String level_name) {
+    this.level_name = level_name;
+  }
+
   public int getMember_no() {
     return member_no;
   }
-  public void setMemberno(int member_no) {
+
+  public void setMember_no(int member_no) {
     this.member_no = member_no;
   }
-  public String getId() {
-    return id;
+
+  public String getMember_id() {
+    return member_id;
   }
-  public void setId(String id) {
-    this.id = id;
+
+  public void setMember_id(String member_id) {
+    this.member_id = member_id;
   }
-  public String getPasswd() {
-    return passwd;
+
+  public String getMember_passwd() {
+    return member_passwd;
   }
-  public void setPasswd(String passwd) {
-    this.passwd = passwd;
+
+  public void setMember_passwd(String member_passwd) {
+    this.member_passwd = member_passwd;
   }
-  public String getMname() {
-    return mname;
+
+  public String getMember_nickname() {
+    return member_nickname;
   }
-  public void setMname(String mname) {
-    this.mname = mname;
-  }
-  public String getTel() {
-    return tel;
-  }
-  public void setTel(String tel) {
-    this.tel = tel;
-  }
-  public String getZipcode() {
-    return zipcode;
-  }
-  public void setZipcode(String zipcode) {
-    this.zipcode = zipcode;
-  }
-  public String getAddress1() {
-    return address1;
-  }
-  public void setAddress1(String address1) {
-    this.address1 = address1;
-  }
-  public String getAddress2() {
-    return address2;
-  }
-  public void setAddress2(String address2) {
-    this.address2 = address2;
-  }
-  public String getMdate() {
-    return mdate;
-  }
-  public void setMdate(String mdate) {
-    this.mdate = mdate;
-  }
-  public String getOld_passwd() {
-    return old_passwd;
-  }
-  public void setOld_passwd(String old_passwd) {
-    this.old_passwd = old_passwd;
-  }
-  public String getId_save() {
-    return id_save;
-  }
-  public void setId_save(String id_save) {
-    this.id_save = id_save;
-  }
-  public String getPasswd_save() {
-    return passwd_save;
-  }
-  public void setPasswd_save(String passwd_save) {
-    this.passwd_save = passwd_save;
-  }
-  public String getUrl_address() {
-    return url_address;
-  }
-  public void setUrl_address(String url_address) {
-    this.url_address = url_address;
+
+  public void setMember_nickname(String member_nickname) {
+    this.member_nickname = member_nickname;
   }
   
+  public String getMember_name() {
+    return member_name;
+  }
+  
+  public void setMember_name(String member_name) {
+    this.member_name = member_name;
+  }
 
- 
+  public String getMember_isAdult() {
+    return member_isAdult;
+  }
+
+  public void setMember_isAdult(String member_isAdult) {
+    this.member_isAdult = member_isAdult;
+  }
+
+  public String getMember_tel() {
+    return member_tel;
+  }
+
+  public void setMember_tel(String member_tel) {
+    this.member_tel = member_tel;
+  }
+
+  public String getMember_email() {
+    return member_email;
+  }
+
+  public void setMember_email(String member_email) {
+    this.member_email = member_email;
+  }
+
+  public String getMember_rdate() {
+    return member_rdate;
+  }
+
+  public void setMember_rdate(String member_rdate) {
+    this.member_rdate = member_rdate;
+  }
+  
+  public String getMember_zipcode() {
+    return member_zipcode;
+  }
+
+  public void setMember_zipcode(String member_zipcode) {
+    this.member_zipcode = member_zipcode;
+  }
+
+  public String getMember_address1() {
+    return member_address1;
+  }
+
+  public void setMember_address1(String member_address1) {
+    this.member_address1 = member_address1;
+  }
+
+  public String getMember_address2() {
+    return member_address2;
+  }
+
+  public void setMember_address2(String member_address2) {
+    this.member_address2 = member_address2;
+  }
+
+  public String getMember_profilepic() {
+    return member_profilepic;
+  }
+
+  public void setMember_profilepic(String member_profilepic) {
+    this.member_profilepic = member_profilepic;
+  }
+
+  public String getMember_profilethumb() {
+    return member_profilethumb;
+  }
+
+  public void setMember_profilethumb(String member_profilethumb) {
+    this.member_profilethumb = member_profilethumb;
+  }
+
+  public MultipartFile getFile1MF() {
+    return file1MF;
+  }
+
+  public void setFile1MF(MultipartFile file1mf) {
+    file1MF = file1mf;
+  }
+
+  public int getMemberlevel_no() {
+    return memberlevel_no;
+  }
+
+  public void setMemberlevel_no(int memberlevel_no) {
+    this.memberlevel_no = memberlevel_no;
+  }
+
+  public int getAuth_no() {
+    return auth_no;
+  }
+
+  public void setAuth_no(int auth_no) {
+    this.auth_no = auth_no;
+  }
+
+  public int getSnslogin_no() {
+    return snslogin_no;
+  }
+
+  public void setSnslogin_no(int snslogin_no) {
+    this.snslogin_no = snslogin_no;
+  }
+
+
 }
+
+

@@ -6,7 +6,7 @@
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>전통주 리뷰 커뮤니티</title>
- 
+
 <link href="../css/common.css" rel="stylesheet" type="text/css">
 <link href="../css/menu.css" rel="stylesheet" type="text/css">
 
@@ -21,218 +21,92 @@
 <link href="../css/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
   $(function() { // 자동 실행
-    // id가 'btn_send'인 태그를 찾아 'click' 이벤트 처리자(핸들러)로 send 함수를 등록
-    $('#btn_checkID').on('click', checkID);  
-    // document.getElementById('btn_checkID').addEventListener('click', checkID); 동일
     $('#btn_DaumPostcode').on('click', DaumPostcode); // 다음 우편 번호
-    $('#btn_close').on('click', setFocus); // Dialog창을 닫은후의 focus 이동
-    $('#btn_send').on('click', send); 
   });
-
-  // jQuery ajax 요청
-  function checkID() {
-    // $('#btn_close').attr("data-focus", "이동할 태그 지정");
-    
-    var frm = $('#frm'); // id가 frm인 태그 검색
-    var id = $('#member_id', frm).val(); // frm 폼에서 id가 'id'인 태그 검색
-    var params = '';
-    var msg = '';
-
-    if ($.trim(id).length == 0) { // id를 입력받지 않은 경우
-      msg = 'ID를 입력하세요.<br>ID 입력은 필수 입니다.<br>ID는 3자이상 권장합니다.';
-      
-      $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
-      $('#modal_title').html('ID 중복 확인'); // 제목 
-      $('#modal_content').html(msg);        // 내용
-      $('#modal_panel').modal();              // 다이얼로그 출력
-      return false;
-    } else {  // when ID is entered
-      params = 'id=' + id;
-      // var params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
-      // alert('params: ' + params);
-
-      $.ajax({
-        url: './checkID.do', // spring execute
-        type: 'get',  // post
-        cache: false, // 응답 결과 임시 저장 취소
-        async: true,  // true: 비동기 통신
-        dataType: 'json', // 응답 형식: json, html, xml...
-        data: params,      // 데이터
-        success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
-          // alert(rdata);
-          var msg = "";
-          
-          if (rdata.cnt > 0) {
-            $('#modal_content').attr('class', 'alert alert-danger'); // Bootstrap CSS 변경
-            msg = "이미 사용중인 ID 입니다.";
-            $('#btn_close').attr("data-focus", "member_id");
-          } else {
-            $('#modal_content').attr('class', 'alert alert-success'); // Bootstrap CSS 변경
-            msg = "사용 가능한 ID 입니다.";
-            $('#btn_close').attr("data-focus", "member_passwd");
-            // $.cookie('checkId', 'TRUE'); // Cookie 기록
-          }
-          
-          $('#modal_title').html('ID 중복 확인'); // 제목 
-          $('#modal_content').html(msg);        // 내용
-          $('#modal_panel').modal();              // 다이얼로그 출력
-        },
-        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
-        error: function(request, status, error) { // callback 함수
-          var msg = 'ERROR\n';
-          msg += 'request.status: '+request.status + '\n';
-          msg += 'message: '+error;
-          console.log(msg);
-        }
-      });
-      
-      // 처리중 출력
-  /*     var gif = '';
-      gif +="<div style='margin: 0px auto; text-align: center;'>";
-      gif +="  <img src='./images/ani04.gif' style='width: 10%;'>";
-      gif +="</div>";
-      
-      $('#panel2').html(gif);
-      $('#panel2').show(); // 출력 */
-      
-    }
-
-  }
-
-  function setFocus() {  // focus 이동
-    var tag = $('#btn_close').attr('data-focus'); // 포커스를 적용할 태그 id 가져오기
-    $('#' + tag).focus(); // 포커스 지정
-  }
-
-  function send() { // 회원 가입 처리
-    // 패스워드를 정상적으로 2번 입력했는지 확인
-    if ($('#member_passwd').val() != $('#member_passwd2').val()) {
-      msg = '입력된 패스워드가 일치하지 않습니다.<br>';
-      msg += "패스워드를 다시 입력해주세요.<br>"; 
-      
-      $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
-      $('#modal_title').html('패스워드 일치 여부  확인'); // 제목 
-      $('#modal_content').html(msg);  // 내용
-      $('#modal_panel').modal();         // 다이얼로그 출력
-      
-      $('#btn_send').attr('data-focus', 'member_passwd');
-      
-      return false; // submit 중지
-    }
-  
-    $('#frm').submit();
-  }
 
 </script>
 </head> 
  
 <body>
 <jsp:include page="/menu/top.jsp" flush='false' />
-
-  <!-- ********** Modal 알림창 시작 ********** -->
-  <div id="modal_panel" class="modal fade"  role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title" id='modal_title'></h4><!-- 제목 -->
-        </div>
-        <div class="modal-body">
-          <p id='modal_content'></p>  <!-- 내용 -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="btn_close" data-focus="" class="btn btn-default" 
-                  data-dismiss="modal">닫기</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- ********** Modal 알림창 종료 ********** -->
-  <DIV class="title_line">
-    회원 가입
+  <DIV class='title_line'>
+    회원 정보
   </DIV>
+
   <ASIDE class="aside_left">
-    * : 필수 입력
+    <A href=''>회원</A> > 
+    <A href=''>회원정보</A> > 수정
   </ASIDE>
   <ASIDE class="aside_right">
-    <A href='./create.do'>목록</A>
+    <A href='./list.do'>목록</A>
     <!-- <span class='menu_divide' >│</span> --> 
   </ASIDE> 
  
   <div class='menu_line'></div>
   
   <DIV style='width: 100%;'>
-    <FORM name='frm' id="frm" method='POST' action='./create.do' class="form-horizontal"
+    <FORM name='frm' id="frm" method='POST' action='./update.do' class="form-horizontal"
           enctype="multipart/form-data">
+      <input type="hidden" name="member_no" value="${memberVO.member_no}" >
 
       <div class="form-group">   
         <label for="member_id" class="col-md-2 control-label">아이디 *</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_id' id='member_id' value="" placeholder="아이디" required="required" autofocus="autofocus" style="width:80%;">
-          <button type='button' id="btn_checkID" class="btn btn-info btn-md">중복확인</button>
-          <SPAN id='id_span'></SPAN> <!-- ID 중복 관련 메시지 -->     
+          <input type="text" class="form-control" name='member_id' id='member_id' value="${memberVO.member_id }" readonly="readonly"  style="width:80%;">
         </div>
       </div>
 
-      <div class="form-group">   
+      <div class="form-group">
         <label for="member_passwd" class="col-md-2 control-label">비밀번호 *</label>
         <div class="col-md-6">
-          <input type='password' class="form-control" name='member_passwd'  id='member_passwd' value='1234' placeholder="패스워드" style='width: 20%;'>
-        </div>
-      </div>
-
-      <div class="form-group">   
-        <label for="member_passwd2" class="col-md-2 control-label">비밀번호 확인*</label>
-        <div class="col-md-6">
-          <input type='password' class="form-control" name='member_passwd2'  id='member_passwd2' value='1234' placeholder="패스워드" style='width: 20%;'>
+          <input type='password' class="form-control" name='member_passwd'  id='member_passwd' value='' placeholder="패스워드" style='width: 20%;'>
         </div>
       </div>
 
       <div class="form-group">   
         <label for="member_name" class="col-md-2 control-label">성명 *</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_name' value='홍길동' placeholder="이름" required="required" style='width: 80%;'>
+          <input type='text' class="form-control" name='member_name' value='${memberVO.member_name }' placeholder="이름" required="required" style='width: 80%;'>
         </div>
       </div>
 
       <div class="form-group">   
         <label for="member_nickname" class="col-md-2 control-label">닉네임 *</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_nickname' value='단풍' placeholder="별명" required="required" style='width: 80%;'>
+          <input type='text' class="form-control" name='member_nickname' value='${memberVO.member_nickname}' placeholder="별명" required="required" style='width: 80%;'>
         </div>
       </div>
 
       <div class="form-group">   
         <label for="member_isAdult" class="col-md-2 control-label">주민등록번호 *</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_isAdult' value='8000001234567' placeholder="주민등록번호" required="required" style='width: 80%;'>
+          <input type='text' class="form-control" name='member_isAdult' value='${memberVO.member_isAdult }' placeholder="주민등록번호" required="required" style='width: 80%;'>
         </div>
       </div>
 
       <div class="form-group">   
         <label for="member_tel" class="col-md-2 control-label">전화번호 *</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_tel' value='01012345678' placeholder="전화번호" required="required" style='width: 80%;'>
+          <input type='text' class="form-control" name='member_tel' value='${memberVO.member_tel }' placeholder="전화번호" required="required" style='width: 80%;'>
         </div>
       </div>
 
       <div class="form-group">   
         <label for="member_email" class="col-md-2 control-label">이메일 *</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_email' value='test1@gmail.com' placeholder="이메일" required="required" style='width: 80%;'>
+          <input type='text' class="form-control" name='member_email' value='${memberVO.member_email}' placeholder="이메일" required="required" style='width: 80%;'>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="member_zipcode" class="col-md-2 control-label" style='font-size: 0.9em;'>우편번호 *</label>    
+        <label for="member_zipcode" class="col-md-2 control-label" style='font-size: 0.9em;'>우편번호</label>    
         <div class="col-md-10">
           <input type='text' class="form-control" name='member_zipcode' id='member_zipcode' 
-                 value='' style='width: 30%;' placeholder="우편번호">
-                 <input type="button" id="btn_DaumPostcode" value="우편번호 찾기" class="btn btn-info btn-md">
+                 value='${memberVO.member_zipcode }' style='width: 30%;' placeholder="우편번호">
+          <input type="button" id="btn_DaumPostcode" value="우편번호 찾기" class="btn btn-info btn-md">
         </div>
       </div>  
-      
+
       <!-- ---------- DAUM 우편번호 API 시작 ---------- -->
       <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 110px;position:relative">
         <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
@@ -304,28 +178,41 @@
       <div class="form-group">   
         <label for="member_address1" class="col-md-2 control-label">주소</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_address1' id='member_address1' value='' placeholder="주소" required="required" style='width: 80%;'>
+          <input type='text' class="form-control" name='member_address1' id='member_address1' value='${memberVO.member_address1}' placeholder="주소" required="required" style='width: 80%;'>
         </div>
       </div>
 
       <div class="form-group">   
         <label for="member_address2" class="col-md-2 control-label">상세주소</label>
         <div class="col-md-6">
-          <input type='text' class="form-control" name='member_address2' id='member_address2' value='' placeholder="주소" required="required" style='width: 80%;'>
+          <input type='text' class="form-control" name='member_address2' id='member_address2' value=''${memberVO.member_address2} placeholder="주소" required="required" style='width: 80%;'>
         </div>
       </div>
-
+      
       <div class="form-group">
         <label for="file1MF" class="col-md-2 control-label">프로필사진</label>
         <div class="col-md-6">
           <%-- 실제 컬럼명: member_profilepic, Spring File 객체 대응: fiel1MF --%>
+          <imb src="./storage/profile_image/${memberVO.member_profilethumb}">
           <input type='file' class="form-control" name='file1MF' id='file1MF' 
-                 value='' placeholder="파일 선택" multiple="multiple">
+                    value='' placeholder="파일 선택" multiple="multiple">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="memberlevel" class="col-md-2 control-label">등급</label>
+        <div class="col-md-6">
+          <%-- 실제 컬럼명: member_profilepic, Spring File 객체 대응: fiel1MF --%>
+          <select name="memberlevel">
+            <option value="일반회원" selected="selected">일반회원</option>
+            <option value="준회원">준회원</option>
+            <option value="정회원">정회원</option>
+         </select>
         </div>
       </div>
       
       <DIV class='content_bottom_menu'>
-        <button type="button" id="btn_send" class="btn btn-info">가입</button>
+        <button type="submit" id="btn_send" class="btn btn-info">수정</button>
         <button type="button" 
                 onclick="location.href='./list.do'" 
                 class="btn btn-info">취소</button>
@@ -335,9 +222,9 @@
   </DIV>
 
   
+  
 <jsp:include page="/menu/bottom.jsp" flush='false' />
 </body>
  
 </html>
- 
-  
+

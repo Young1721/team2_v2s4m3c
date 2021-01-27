@@ -5,76 +5,95 @@ import java.util.List;
 import java.util.Map;
 
 public interface MemberDAOInter {
+  
   /**
-   * ï¿½ßºï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ë»ï¿½
+   * Áßº¹ ¾ÆÀÌµð °Ë»ç
    * @param id
-   * @return ï¿½ßºï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+   * @return Áßº¹ ¾ÆÀÌµð °¹¼ö
    */
   public int checkID(String id);
   
   /**
-   * È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   * @param memberVO
-   * @return
+   * µî·Ï
+   * @param cateVO
+   * @return µî·ÏµÈ °¹¼ö
    */
   public int create(MemberVO memberVO);
   
   /**
-   * È¸ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½
+   * ¸ñ·Ï
    * @return
    */
-  public List<MemberVO> list();
+  public List<MemberVO> list_memberno_asc();
   
   /**
-   * È¸ï¿½ï¿½ ï¿½ï¿½È¸
-   * @param memberno
+   * ¸ñ·Ï
+   * @return
+   */
+  public List<MemberVO> list_join();
+  
+  /**
+   * °Ë»ö + ÆäÀÌÂ¡ ¸ñ·Ï
+   * @param map
+   * @return
+   */
+  public List<MemberVO> list_paging(HashMap<String, Object> map);
+  
+  /**
+   * Ä«Å×°í¸®º° °Ë»ö ·¹ÄÚµå °¹¼ö
+   * @param hashMap
+   * @return
+   */
+  public int search_count(HashMap<String, Object> hashMap);
+  
+  /**
+   * Á¶È¸, ¼öÁ¤Æû
+   * @param member_no ¸â¹ö ¹øÈ£, PK
    * @return
    */
   public MemberVO read(int member_no);
-  
+
   /**
-   * È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
+   * È¸¿ø Á¤º¸ Á¶È¸
    * @param id
    * @return
    */
-  public MemberVO readById(String id);
+  public MemberVO readById(String member_id);
   
   /**
-   * ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+   * ¼öÁ¤¿ë Á¶È¸
+   * @param member_no
+   * @return
+   */
+  public MemberVO read_update(int member_no);
+  
+  /**
+   * ¼öÁ¤ Ã³¸®
    * @param memberVO
    * @return
    */
   public int update(MemberVO memberVO);
   
   /**
-   * È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
-   * @param memberno
+   * ÆÐ½º¿öµå °Ë»ç
+   * @param hashMap
+   * @return
+   */
+  public int passwd_check(HashMap hashMap);
+  
+  /**
+   * »èÁ¦
+   * @param member_no
    * @return
    */
   public int delete(int member_no);
-  
+
   /**
-   * ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
-   * @param map
-   * @return 0: ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, 1: ï¿½ï¿½Ä¡ï¿½ï¿½
-   */
-  public int passwd_check(HashMap<Object, Object> map);
-  
-  /**
-   * ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   * @param map
-   * @return ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-   */
-  public int passwd_update(HashMap<Object, Object> map);
-  
-  /**
-   * ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+   * ·Î±×ÀÎ Ã³¸®
    */
   public int login(Map<String, Object> map);
   
 }
-
-
 
 
 

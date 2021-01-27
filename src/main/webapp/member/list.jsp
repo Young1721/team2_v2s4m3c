@@ -1,17 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  
-<!DOCTYPE html> 
-<html lang="ko"> 
-<head> 
-<meta charset="UTF-8"> 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
- 
+<title>전통주 리뷰 커뮤니티</title>
+
 <link href="../css/common.css" rel="stylesheet" type="text/css">
 <link href="../css/menu.css" rel="stylesheet" type="text/css">
-<link href="../css/style.css" rel="stylesheet" type="text/css">
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -20,93 +18,83 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
- 
- 
-<script type="text/javascript">
-  $(function(){
- 
-  });
-</script>
-</head> 
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+</head>
  
 <body>
 <jsp:include page="/menu/top.jsp" flush='false' />
- 
-  <DIV class='title_line'>
-    회원
+  <DIV class="title_line">
+    회원 목록
   </DIV>
-
   <ASIDE class="aside_left">
-      <A href='./member/list.do'>회원 목록</A>  
+    전체 보기 
   </ASIDE>
   <ASIDE class="aside_right">
     <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>회원 가입</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>목록</A>
-  </ASIDE> 
- 
-  <div class='menu_line'></div>
+  </ASIDE>
+  <DIV class='menu_line'></DIV>
   
- 
-  <table class="table table-striped" style='width: 100%;'>
-  <caption>관리자만 접근가능합니다.</caption>
-  <colgroup>
-    <col style='width: 5%;'/>
-    <col style='width: 10%;'/>
-    <col style='width: 15%;'/>
-    <col style='width: 15%;'/>
-    <col style='width: 30%;'/>
-    <col style='width: 15%;'/>
-    <col style='width: 10%;'/>
-  </colgroup>
-  <TR>
-    <TH class='th'>번호</TH>
-    <TH class='th'>ID</TH>
-    <TH class='th'>성명</TH>
-    <TH class='th'>전화번호</TH>
-    <TH class='th'>주소</TH>
-    <TH class='th'>등록일</TH>
-    <TH class='th'>기타</TH>
-  </TR>
- 
-  <c:forEach var="memberVO" items="${list }">
-    <c:set var="memberno" value ="${memberVO.memberno}" /> 
-  <TR>
-    <TD class='td'>${memberno}</TD>
-    <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.id}</A></TD>
-    <TD class='td'><A href="./read.do?memberno=${memberno}">${memberVO.mname}</A></TD>
-    <TD class='td'>${memberVO.tel}</TD>
-    <TD class='td'>
-      <c:choose>
-        <c:when test="${memberVO.address1.length() > 15 }"> <!-- 긴 주소 처리 -->
-          ${memberVO.address1.substring(0, 15) }...
-        </c:when>
-        <c:otherwise>
-          ${memberVO.address1}
-        </c:otherwise>
-      </c:choose>
-    </TD>
-    <TD class='td'>${memberVO.mdate.substring(0, 10)}</TD> <!-- 년월일 -->
-    <TD class='td'>
-      <A href="./passwd_update.do?memberno=${memberno}"><IMG src='./images/passwd.png' title='패스워드 변경'></A>
-      <A href="./read.do?memberno=${memberno}"><IMG src='./images/update.png' title='수정'></A>
-      <A href="./delete.do?memberno=${memberno}"><IMG src='./images/delete.png' title='삭제'></A>
-    </TD>
-    
-  </TR>
-  </c:forEach>
-  
-</TABLE>
- 
-<DIV class='bottom_menu'>
-  <button type='button' onclick="location.href='./create.do'">등록</button>
-  <button type='button' onclick="location.reload();">새로 고침</button>
-</DIV>
+  <div style='width: 100%;'>
+    <table class="table table-striped" style='width: 100%;'>
+      <colgroup>
+        <col style="width: 5%;"></col>
+        <col style="width: 15%;"></col>
+        <col style="width: 15%;"></col>
+        <col style="width: 10%;"></col>
+        <col style="width: 20%;"></col>
+        <col style="width: 10%;"></col>
+        <col style="width: 20%;"></col>
+      </colgroup>
+      <%-- table 컬럼 --%>
+      <thead>
+        <tr>
+          <th style='text-align: center;'>번호</th>
+          <th style='text-align: center;'>아이디</th>
+          <th style='text-align: center;'>프로필사진</th>
+          <th style='text-align: center;'>닉네임</th>
+          <th style='text-align: center;'>이메일</th>
+          <th style='text-align: center;'>가입일</th>
+          <th style='text-align: center;'>등급</th>
+        </tr>
+      
+      </thead>
+      
+      <%-- table 내용 --%>
+      <tbody>
+        <c:forEach var="memberVO" items="${list }">
+          <c:set var="member_no" value="${memberVO.member_no }" />
+          <c:set var="thumb" value="${memberVO.member_profilethumb }" />
+          
+          <tr> 
+            <td style='text-align: center;'>${member_no}</td>
+            <td style='text-align: center;'><a href="./read.do?member_no=${member_no}">${memberVO.member_id}</a></td>
+            <td style='vertical-align: middle; text-align: center;'>
+<%--              <c:choose>
+                 <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> --%>
+                  <IMG src="./storage/profile_images/${thumb}" style="width: 120px; height: 80px;"> 
+<%--                 </c:when>
+                <c:otherwise> <!-- 이미지가 아닌 일반 파일 -->
+                  ${contentsVO.file1}
+                </c:otherwise>
+              </c:choose> --%>
+            </td>  
+            <td style='text-align: center;'>${memberVO.member_nickname}</td>
+            <td style='text-align: center;'>${memberVO.member_email}</td> 
+            <td style='text-align: center;'>${memberVO.member_rdate.substring(0,10)}</td>
+            <td style='text-align: center;'>${memberVO.level_name}</td>
+          </tr>
+        </c:forEach>
+        
+      </tbody>
+    </table>
+    <DIV class='bottom_menu'>${paging }</DIV>
+    <br><br>
+  </div>
  
 <jsp:include page="/menu/bottom.jsp" flush='false' />
 </body>
  
 </html>
-
+ 

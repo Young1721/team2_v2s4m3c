@@ -6,11 +6,10 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>전통주 리뷰 커뮤니티</title>
  
 <link href="../css/common.css" rel="stylesheet" type="text/css">
 <link href="../css/menu.css" rel="stylesheet" type="text/css">
-<link href="../css/style.css" rel="stylesheet" type="text/css">
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,45 +18,60 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
- 
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
 </head> 
 <body>
 <jsp:include page="/menu/top.jsp" flush='false' />
- 
-  <DIV class='title_line'>
-    회원
+  <DIV class="title_line">
+    가을
   </DIV>
-
+   
   <ASIDE class="aside_left">
-      <A href='./member/list.do'>회원 목록</A>  
+    <A href=''>카테고리 그룹</A> > 
+    <A href=''>카테고리</A> >
+    신규 등록
   </ASIDE>
   <ASIDE class="aside_right">
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>회원 가입</A>
-    <span class='menu_divide' >│</span> 
-    <A href='./create.do'>목록</A>
+    <A href=''>목록</A>
+    <!-- <span class='menu_divide' >│</span> --> 
   </ASIDE> 
-
-  <div class='menu_line'></div>
  
+  <div class='menu_line'></div>
+   
 <DIV class='message'>
   <fieldset class='fieldset_basic'>
     <UL>
       <c:choose>
-        <c:when test="${param.cnt == 1 }">
-          <LI class='li_none'>회원가입이 완료되었습니다.</LI>
+        <c:when test="${cnt == 1 }">
+          <LI class='li_none'>
+            <span class='span_success'>가입했습니다.</span>
+          </LI>
         </c:when>
         <c:otherwise>
-          <LI class='li_none'>회원 가입에 실패했습니다.</LI>
-          <LI class='li_none'>다시한번 시도해주세요.</LI>
-          <LI class='li_none'>계속 실패시 ☏ 000-0000-0000 문의해주세요.</LI>
+          <LI class='li_none'>
+            <span class='span_fail'>가입에 실패했습니다.</span>
+          </LI>
         </c:otherwise>
       </c:choose>
       <LI class='li_none'>
         <br>
-        <button type='button' onclick="location.href='./create.do'">회원 등록</button>
-        <button type='button' onclick="location.href='./list.do'">목록</button>
+        <c:choose>
+          <c:when test="${cnt == 1 }">
+            <button type='button' 
+                         onclick=""
+                         class="btn btn-info">로그인</button>
+          </c:when>
+          <c:otherwise>
+            <button type='button' 
+                         onclick="history.back();"
+                         class="btn btn-info">다시 시도</button>
+          </c:otherwise>
+        </c:choose>
+                    
+        <button type='button' 
+                    onclick="location.href='./list.do?cateno=${param.cateno}'"
+                    class="btn btn-info">목록</button>
       </LI>
      </UL>
   </fieldset>
@@ -68,4 +82,4 @@
 </body>
  
 </html>
- 
+   

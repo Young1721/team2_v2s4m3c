@@ -1,125 +1,183 @@
-- 테이블 구조
--- member 삭제전에 FK가 선언된 blog 테이블 먼저 삭제합니다.
-DROP TABLE attachfile;
-DROP TABLE contents;
+-- 테이블 구조
+-- member 삭제전에 FK가 선언된 테이블 먼저 삭제합니다.
+DROP TABLE auth;
+DROP TABLE memberlevel;
+DROP TABLE snslogin;
 DROP TABLE member;
--- 제약 조건과 함께 삭제(제약 조건이 있어도 삭제됨, 권장하지 않음.)
-DROP TABLE member CASCADE CONSTRAINTS; 
- 
-CREATE TABLE member (
-  member_no NUMBER(6) NOT NULL, -- 회원 번호, 레코드를 구분하는 컬럼 
-  id             VARCHAR(20)   NOT NULL UNIQUE, -- 아이디, 중복 안됨, 레코드를 구분 
-  passwd      VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
-  mname      VARCHAR(20)   NOT NULL, -- 성명, 한글 10자 저장 가능
-  tel            VARCHAR(14)   NOT NULL, -- 전화번호
-  zipcode     VARCHAR(5)        NULL, -- 우편번호, 12345
-  address1    VARCHAR(80)       NULL, -- 주소 1
-  address2    VARCHAR(50)       NULL, -- 주소 2
-  mdate       DATE             NOT NULL, -- 가입일    
-  PRIMARY KEY (member_no)                     -- 한번 등록된 값은 중복 안됨
+
+/**********************************/
+/* Table Name: 회원 */
+/**********************************/
+CREATE TABLE member(
+    member_no                     NUMBER(10)		NOT NULL    PRIMARY KEY,
+    member_id                     VARCHAR2(50)		NOT NULL,
+    member_passwd                 VARCHAR2(50)		NOT NULL,
+    member_nickname               VARCHAR2(50)		NOT NULL,
+    member_name                   VARCHAR2(50)		NOT NULL,
+    member_isAdult                VARCHAR2(50)		NOT NULL,
+    member_tel                    VARCHAR2(50)		NOT NULL,
+    member_email                  VARCHAR2(100)		NULL,
+    member_rdate                  DATE		        NOT NULL,
+    member_zipcode                VARCHAR2(200)		NOT NULL,
+    member_address1               VARCHAR2(200)     NOT NULL,
+    member_address2               VARCHAR2(200)     NOT NULL,
+    member_profilepic             VARCHAR2(200)     NULL,
+    member_profilethumb           VARCHAR2(200)     NULL,
+    memberlevel_no                NUMBER(10)		NOT NULL,
+    auth_no                       NUMBER(10)        NOT NULL,
+    snslogin_no                   NUMBER(10)		NOT NULL,
+    FOREIGN KEY (auth_no) REFERENCES auth (auth_no),
+    FOREIGN KEY (memberlevel_no) REFERENCES memberlevel (memberlevel_no),
+    FOREIGN KEY (snslogin_no) REFERENCES snslogin (snslogin_no)
 );
- 
-COMMENT ON TABLE MEMBER is '회원';
-COMMENT ON COLUMN MEMBER.MEMBERNO is '회원 번호';
-COMMENT ON COLUMN MEMBER.ID is '아이디';
-COMMENT ON COLUMN MEMBER.PASSWD is '패스워드';
-COMMENT ON COLUMN MEMBER.MNAME is '성명';
-COMMENT ON COLUMN MEMBER.TEL is '전화번호';
-COMMENT ON COLUMN MEMBER.ZIPCODE is '우편번호';
-COMMENT ON COLUMN MEMBER.ADDRESS1 is '주소1';
-COMMENT ON COLUMN MEMBER.ADDRESS2 is '주소2';
-COMMENT ON COLUMN MEMBER.MDATE is '가입일';
 
-DROP SEQUENCE member_seq;
-CREATE SEQUENCE member_seq
-  START WITH 1              -- 시작 번호
-  INCREMENT BY 1          -- 증가값
-  MAXVALUE 9999999999 -- 최대값: 9999999 --> NUMBER(7) 대응
-  CACHE 2                       -- 2번은 메모리에서만 계산
-  NOCYCLE;                     -- 다시 1부터 생성되는 것을 방지
- 
- 
-1. 등록
- 
-1) id 중복 확인
-SELECT COUNT(id) as cnt
-FROM member
-WHERE id='user1';
- 
- cnt
- ---
-   0   ← 중복 되지 않음.
-   
-2) 등록
--- 회원 관리용 계정, Q/A 용 계정
-INSERT INTO member(member_no, id, passwd, mname, tel, zipcode, address1, address2, mdate)
-VALUES (member_seq.nextval, 'qnaadmin', '1234', 'QNA관리자', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate);
- 
-INSERT INTO member(member_no, id, passwd, mname, tel, zipcode, address1, address2, mdate)
-VALUES (member_seq.nextval, 'crm', '1234', '고객관리자', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate);
- 
--- 개인 회원 테스트 계정
-INSERT INTO member(member_no, id, passwd, mname, tel, zipcode, address1, address2, mdate)
-VALUES (member_seq.nextval, 'user1', '1234', '왕눈이', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate);
- 
-INSERT INTO member(member_no, id, passwd, mname, tel, zipcode, address1, address2, mdate)
-VALUES (member_seq.nextval, 'user2', '1234', '아로미', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate);
- 
-INSERT INTO member(member_no, id, passwd, mname, tel, zipcode, address1, address2, mdate)
-VALUES (member_seq.nextval, 'user3', '1234', '투투투', '000-0000-0000', '12345', '서울시 종로구', '관철동', sysdate);
- 
-COMMIT;
+COMMENT ON TABLE member is '회원';
+COMMENT ON COLUMN member.member_no is '회원번호';
+COMMENT ON COLUMN member.member_id is 'ID';
+COMMENT ON COLUMN member.member_passwd is '비밀번호';
+COMMENT ON COLUMN member.member_nickname is '닉네임';
+COMMENT ON COLUMN member.member_name is '이름';
+COMMENT ON COLUMN member.member_isAdult is '주민등록번호';
+COMMENT ON COLUMN member.member_tel is '전화번호';
+COMMENT ON COLUMN member.member_email is '이메일';
+COMMENT ON COLUMN member.member_rdate is '가입일';
+COMMENT ON COLUMN member.member_zipcode is '우편번호';
+COMMENT ON COLUMN member.member_address1 is '주소1';
+COMMENT ON COLUMN member.member_address2 is '주소2';
+COMMENT ON COLUMN member.member_profilepic is '프로필사진';
+COMMENT ON COLUMN member.member_profilepic is '프로필섬네일';
+COMMENT ON COLUMN member.memberlevel_no is '등급';
+COMMENT ON COLUMN member.auth_no is '권한';
+COMMENT ON COLUMN member.snslogin_no is 'SNS로그인';
 
- 
-2. 목록
-- 검색을 하지 않는 경우, 전체 목록 출력
- 
-SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate
+DROP SEQUENCE member_no_seq;
+CREATE SEQUENCE member_no_SEQ
+  START WITH 1           -- 시작 번호
+  INCREMENT BY 1       -- 증가값
+  MAXVALUE 9999999999 -- 최대값: 99999999 --> NUMBER(10) 대응
+  CACHE 2                  -- 2번은 메모리에서만 계산
+  NOCYCLE;                -- 다시 1부터 생성되?? 것을 방지
+
+-- 등록
+INSERT INTO member(member_no, member_id, member_passwd, member_nickname, member_name, 
+                   member_isAdult, member_tel, member_email, member_rdate,
+                   member_zipcode, member_address1, member_address2, member_profilepic, 
+                   memberlevel_no, auth_no, snslogin_no)
+VALUES (member_no_seq.nextval, 'test1', 1234, '의적', '홍길동',
+        '9001011234567', '01012345678', 'test@gmail.com', sysdate,
+        '01234', '서울특별시', '중랑구', '01.jpg',
+        1, 1, 1);
+
+INSERT INTO member(member_no, member_id, member_passwd, member_nickname, member_name, 
+                   member_isAdult, member_tel, member_email, member_rdate,
+                   member_zipcode, member_address1, member_address2, member_profilepic, 
+                   memberlevel_no, auth_no, snslogin_no)
+VALUES (member_no_seq.nextval, 'test2', 1234, '세종', '이도',
+        '9001011234567', '01012345678', 'korea@gmail.com', sysdate,
+        '01234', '서울특별시', '경복궁', '02.jpg',
+        1, 1, 1);
+
+INSERT INTO member(member_no, member_id, member_passwd, member_nickname, member_name, 
+                   member_isAdult, member_tel, member_email, member_rdate,
+                   member_zipcode, member_address1, member_address2, member_profilepic, 
+                   memberlevel_no, auth_no, snslogin_no)
+VALUES (member_no_seq.nextval, 'test3', 1234, '슈퍼맨', '클락 켄트',
+        '9001011234567', '01012345678', 'test@gmail.com', sysdate,
+        '01234', '서울특별시', '중랑구', '03.jpg',
+        1, 1, 1);
+
+INSERT INTO member(member_no, member_id, member_passwd, member_nickname, member_name, 
+                   member_isAdult, member_tel, member_email, member_rdate,
+                   member_zipcode, member_address1, member_address2, member_profilepic, 
+                   memberlevel_no, auth_no, snslogin_no)
+VALUES (member_no_seq.nextval, 'user1', 1234, '배트맨', '브루스 웨인',
+        '9001011234567', '01012345678', 'test@gmail.com', sysdate,
+        '01234', '서울특별시', '중랑구', '03.jpg',
+        1, 1, 1);
+        
+commit;
+
+-- 목록
+SELECT member_no, member_id, member_nickname, member_isAdult, member_rdate, auth_no, member_profilepic
 FROM member
-ORDER BY memberno ASC;
- 
- MEMBERNO ID       PASSWD MNAME  TEL           ZIPCODE ADDRESS1 ADDRESS2 MDATE
- --- -------- ------ ------ ------------- ------- -------- -------- ---------------------
-   1 qnaadmin 1234   QNA관리자 000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:43.0
-   2 crm      1234   고객관리자  000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:44.0
-   3 user1    1234   왕눈이    000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:48.0
-   4 user2    1234   아로미    000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:49.0
-   5 user3    1234   투투투    000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:50.0
-   6 team1    1234   개발팀    000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:53.0
-   7 team2    1234   웹퍼블리셔팀 000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:54.0
-   8 team3    1234   디자인팀   000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:55.0
- 
-   
-3. 조회
- 
-1) user1 사원 정보 보기
-SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate
+ORDER BY member_no ASC;
+
+SELECT *
 FROM member
-WHERE memberno = 1;
- 
- MEMBERNO ID       PASSWD MNAME  TEL           ZIPCODE ADDRESS1 ADDRESS2 MDATE
- --- -------- ------ ------ ------------- ------- -------- -------- ---------------------
-   1 qnaadmin 1234   QNA관리자 000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:43.0
- 
-SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate
+ORDER BY member_no ASC;
+
+-- 조인
+SELECT l.memberlevel_no as level_no, l.memberlevel_name as level_name,
+       m.member_no, m.member_id, m.member_name, m.member_nickname, m.member_profilethumb, m.memberlevel_no
+FROM memberlevel l, member m
+WHERE m.memberlevel_no = l.memberlevel_no
+ORDER BY l.memberlevel_no ASC, m.member_no ASC;
+
+SELECT l.memberlevel_no as level_no, l.memberlevel_name as level_name,
+        m.member_no, m.member_name
+FROM memberlevel l, member m
+WHERE m.memberlevel_no = l.memberlevel_no
+ORDER BY l.memberlevel_no ASC, m.member_no ASC;
+
+-- 페이징
+SELECT member_id, member_name, r
+FROM(
+         SELECT member_no, member_id, member_name, rownum as r
+         FROM (
+                   SELECT *
+                   FROM member
+                   ORDER BY member_no ASC
+         )
+)
+WHERE r>=1 AND r <=3;
+
+
+-- 조회
+SELECT member_no, member_id, member_passwd, member_nickname, member_name, 
+       member_isAdult, member_tel, member_email, member_rdate, member_address, auth_no, snslogin_no
 FROM member
-WHERE id = 'user1';
+WHERE member_no = 1;
+
+-- ID체크
+SELECT COUNT(member_id) as cnt
+FROM member
+WHERE member_id = 'test3';
+
+-- 수정
+UPDATE member
+SET member_nickname = '허균'
+WHERE member_no = 1;
+
+UPDATE member
+SET member_passwd = '1234',
+    member_nickname = '의적',
+    member_name = '다길동',
+    member_isAdult = '1234561234567',
+    member_tel = '01022225555',
+    member_email = 'email@email.com', 
+    member_zipcode = '01234',
+    member_address1 = '서울특별시',
+    member_address2 = '용산구',
+    member_profilepic = '01.jpg',
+    memberlevel_no = 1,
+    auth_no = 1
+WHERE member_no=1;
+
+
+-- 패스워드 변경
+1) 패스워드 검사
+SELECT COUNT(memberno) as cnt
+FROM member
+WHERE memberno=3 AND passwd='1234';
  
- MEMBERNO ID    PASSWD MNAME TEL           ZIPCODE ADDRESS1 ADDRESS2 MDATE
- --- ----- ------ ----- ------------- ------- -------- -------- ---------------------
-   3 user1 1234   왕눈이   000-0000-0000 12345   서울시 종로구  관철동      2019-05-24 14:51:48.0
- 
-    
-4. 수정
-UPDATE member 
-SET mname='아로미', tel='111-1111-1111', zipcode='00000',
-      address1='경기도', address2='파주시'
+2) 패스워드 수정
+UPDATE member
+SET passwd='0000'
 WHERE memberno=1;
 
 COMMIT;
 
- 
-5. 삭제
+-- 삭제
 1) 모두 삭제
 DELETE FROM member;
  
@@ -128,29 +186,23 @@ DELETE FROM member
 WHERE memberno=10;
 
 COMMIT;
-
  
-6. 패스워드 변경
-1) 패스워드 검사
-SELECT COUNT(memberno) as cnt
+-- 로그인
+SELECT COUNT(member_no) as cnt
 FROM member
-WHERE memberno=1 AND passwd='1234';
- 
-2) 패스워드 수정
-UPDATE member
-SET passwd='0000'
-WHERE memberno=1;
+WHERE member_id='user1' AND member_passwd='1234';
 
-COMMIT;
- 
- 
-7. 로그인
-SELECT COUNT(memberno) as cnt
-FROM member
-WHERE id='user1' AND passwd='1234';
  cnt
  ---
-   0
- 
- 
- 
+   1
+
+
+-- id를 이용한 회원 정보 조회
+SELECT member_no, member_id, member_passwd, member_name, member_tel, member_zipcode, member_address1, member_address2
+FROM member
+WHERE member_id = 'user1';
+
+ MEMBER_NO MEMBER_ID                                          MEMBER_PASSWD                                      MEMBER_NAME                                        MEMBER_TEL                                         MEMBER_ZIPCODE                                                                                                                                                                                           MEMBER_ADDRESS1                                                                                                                                                                                          MEMBER_ADDRESS2                                                                                                                                                                                         
+---------- -------------------------------------------------- -------------------------------------------------- -------------------------------------------------- -------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+         4 user1                                              1234                                               브루스 웨인                                        01012345678                                        01234                                                                                                                                                                                                    서울특별시                                                                                                                                                                                               중랑구                                                                                                                                                                                                  
+

@@ -7,22 +7,19 @@
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>Resort world</title>
  
-<link href="../css/common.css" rel="stylesheet" type="text/css">
-<link href="../css/menu.css" rel="stylesheet" type="text/css">
-<link href="../css/style.css" rel="stylesheet" type="text/css">
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="../css/style.css" rel="Stylesheet" type="text/css">
  
-<!-- Bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/JavaScript"
+          src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
   function loadDefault() {
-    $('#id').val('user1');
-    $('#passwd').val('1234');
+    $('#member_id').val('user1');
+    $('#member_passwd').val('1234');
   }  
 </script> 
 
@@ -39,7 +36,7 @@
     <div class="form-group">
       <label class="col-md-4 control-label" style='font-size: 0.8em;'>아이디</label>    
       <div class="col-md-8">
-        <input type='text' class="form-control" name='id' id='id' 
+        <input type='text' class="form-control" name='member_id' id='member_id' 
                    value='' required="required" 
                    style='width: 30%;' placeholder="아이디" autofocus="autofocus">
       </div>
@@ -49,7 +46,7 @@
     <div class="form-group">
       <label class="col-md-4 control-label" style='font-size: 0.8em;'>패스워드</label>    
       <div class="col-md-8">
-        <input type='password' class="form-control" name='passwd' id='passwd' 
+        <input type='password' class="form-control" name='member_passwd' id='member_passwd' 
                   value='' required="required" style='width: 30%;' placeholder="패스워드">
 
       </div>
