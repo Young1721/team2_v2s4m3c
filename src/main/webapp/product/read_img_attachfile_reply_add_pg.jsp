@@ -25,10 +25,13 @@
 
 <script type="text/javascript">
 // 첨부 이미지 출력, dir: ../attachfile/storage/, ./storage/main_images/
+var tag = "<A href=\"javascript: $('#product_attachfile_panel').hide();\">";
+tag +=  "  <IMG src='../product_attachfile/storage/${productVO.product_file1.toLowerCase() }' style='width: 200px; height: 200px;'>";
+tag += "</A>";
   function panel_img(dir, file) {
-    var tag = "";
+    tag = "";
     tag   = "<A href=\"javascript: $('#product_attachfile_panel').hide();\">"; // 이미지 감추기
-    tag += "  <IMG src='" + dir + file + "' style='width: 100%;'>";
+    tag += "  <IMG src='" + dir + file + "' style='width: 200px; height: 200px;'>";
     tag += "</A>";
 
     $('#product_attachfile_panel').html(tag);  // 문자열을 태그로 적용
@@ -48,6 +51,9 @@
 
     $("#btn_add").on("click", list_by_product_no_join_add_pg); // 더보기 버튼 이벤트 등록
     // -------------------- 댓글 관련 종료 --------------------
+    
+    $('#product_attachfile_panel').html(tag); 
+    $('#product_attachfile_panel').show(); 
     
   });
  
@@ -375,20 +381,20 @@
             <%-- ********** 첨부 파일 이미지 목록 출력 시작 ********** --%>
             <ASIDE class="aside_left">
                 <li class="li_none">
-                  <DIV id='product_attachfile_panel' style="width: 70%; margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
+                  <DIV id='product_attachfile_panel' style="margin: 0px auto;"></DIV> <!-- 원본 이미지 출력 -->
                 </li>
                 <li class="li_none" style='text-align: center;' >
                   <c:set var="product_file1" value="${productVO.product_file1.toLowerCase() }" />
-                  <c:if test="${product_file1.endsWith('jpg') || product_file1.endsWith('png') || product_file1.endsWith('gif')}">
-                    <A href="javascript:panel_img('./storage/main_images/', '${productVO.product_file1 }')"><IMG src='./storage/main_images/${productVO.product_thumb1 }' style='margin-top: 2px; width: 120px; height: 80px;'></A>
-                  </c:if>
+<%--                   <c:if test="${product_file1.endsWith('jpg') || product_file1.endsWith('png') || product_file1.endsWith('gif')}">
+                    <A href="javascript:panel_img('./storage/main_images/', '${productVO.product_file1 }')"><IMG src='./storage/main_images/${productVO.product_thumb1 }' style='margin-top: 2px; width: 100px; height: 100px;'></A>
+                  </c:if> --%>
                   
                   <c:forEach var="product_attachfileVO" items="${product_attachfile_list }">
                     <c:set var="product_attachfile_thumb" value="${product_attachfileVO.product_attachfile_thumb.toLowerCase() }" />
                     
                     <c:choose>
                       <c:when test="${product_attachfile_thumb.endsWith('jpg') || product_attachfile_thumb.endsWith('png') || product_attachfile_thumb.endsWith('gif')}">
-                        <A href="javascript:panel_img('../product_attachfile/storage/', '${product_attachfileVO.product_attachfile_fname }')"><IMG src='../product_attachfile/storage/${product_attachfileVO.product_attachfile_thumb }' style='margin-top: 2px; width: 120px; height: 80px;'></A>
+                        <A href="javascript:panel_img('../product_attachfile/storage/', '${product_attachfileVO.product_attachfile_fname }')"><IMG src='../product_attachfile/storage/${product_attachfileVO.product_attachfile_thumb }' style='margin-top: 2px; width: 100px; height: 100px;'></A>
                       </c:when>
                     </c:choose>
                   </c:forEach>
