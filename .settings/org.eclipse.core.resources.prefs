@@ -2,7 +2,6 @@ eclipse.preferences.version=1
 encoding//src/main/java/dev/mvc/product/ProductCont.java=UTF-8
 encoding//src/main/java/dev/mvc/product/ProductDAOInter.java=UTF-8
 encoding//src/main/java/dev/mvc/product/ProductProcInter.java=UTF-8
-encoding//src/main/java/dev/mvc/product_reply/Product_ReplyCont.java=UTF-8
 encoding//src/main/webapp/WEB-INF/doc/\uC0C1\uD488/product.sql=MS949
 encoding//src/main/webapp/WEB-INF/doc/\uC0C1\uD488/productgrp.sql=MS949
 encoding//src/main/webapp/WEB-INF/doc/\uC1FC\uD551\uCE74\uD2B8/cart.sql=MS949
