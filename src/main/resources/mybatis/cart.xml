@@ -8,24 +8,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       Spring이 내부적으로 자동으로 interface를 구현해줌. -->
 <mapper namespace="dev.mvc.cart.CartDAOInter">
   <insert id="create" parameterType="CartVO">
-    INSERT INTO cart(cart_no, product_no, cart_cnt, cart_tot, cart_rdate)
-    VALUES(cart_seq.nextval, #{product_no}, #{cart_cnt}, #{cart_tot}, sysdate)
+    INSERT INTO cart(cart_no, cart_check, cart_cnt, cart_tot, cart_rdate)
+    VALUES(cart_seq.nextval, #{cart_check}, #{cart_cnt}, #{cart_tot}, sysdate)
   </insert> 
   
   <select id= "list" resultType= "CartVO">
-    SELECT cart_no, product_no, cart_cnt, cart_tot, cart_rdate
+    SELECT cart_no, cart_check, cart_cnt, cart_tot, cart_rdate
     FROM cart
     ORDER BY cart_no ASC
   </select>
   
   <select id="read" resultType="ProductVO" parameterType="int">
-    SELECT cart_no, product_no, cart_cnt, cart_tot, cart_rdate
+    SELECT cart_no, cart_check, cart_cnt, cart_tot, cart_rdate
     FROM cart
     WHERE cart_no = #{cart_no}
   </select>
   <update id="update" parameterType="ProductVO">
     UPDATE cart
-    SET cart_cnt=#{cart_cnt},cart_tot=#{cart_tot}
+    SET cart_check=#{cart_check}, cart_cnt=#{cart_cnt}, cart_tot=#{cart_tot}
     WHERE cart_no = #{cart_no}
   </update>
   
@@ -33,6 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     DELETE FROM cart
     WHERE cart_no=#{cart_no}
   </delete>
+  
+  <update id="update_cart_check" parameterType="ProductgrpVO">
+    UPDATE cart
+    SET cart_check=#{cart_check}
+    WHERE cart_no=#{cart_no}
+  </update>
   
   
           

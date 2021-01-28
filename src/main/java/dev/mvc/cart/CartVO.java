@@ -4,7 +4,7 @@ public class CartVO {
   /*
    * CREATE TABLE cart(
     cart_no                           NUMBER(10)     NOT NULL    PRIMARY KEY,
-    product_no                        NUMBER(10)     NOT NULL,
+    cart_check                        CHAR(1)    DEFAULT 'Y'     NOT NULL,
     cart_cnt                          NUMBER(10)     NULL ,
     cart_tot                          NUMBER(10)     NULL ,
     cart_rdate                        DATE     NOT NULL,
@@ -13,7 +13,7 @@ public class CartVO {
    */
   
   private int cart_no;
-  private int product_no;
+  private String cart_check;
   private int cart_cnt;
   private int cart_tot;
   private String cart_rdate;
@@ -24,11 +24,11 @@ public class CartVO {
   public void setCart_no(int cart_no) {
     this.cart_no = cart_no;
   }
-  public int getProduct_no() {
-    return product_no;
+  public String getCart_check() {
+    return cart_check;
   }
-  public void setProduct_no(int product_no) {
-    this.product_no = product_no;
+  public void setCart_check(String cart_check) {
+    this.cart_check = cart_check;
   }
   public int getCart_cnt() {
     return cart_cnt;

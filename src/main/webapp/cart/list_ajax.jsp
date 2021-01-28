@@ -50,10 +50,11 @@
       data: params,      // 데이터
       success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
         if (rdata.cnt > 0) {
-          msg = "『" + $('#productgrp_name').val() + "』 카테고리 그룹을 등록했습니다."
+          // msg = "『" + $('#productgrp_name').val() + "』 카테고리 그룹을 등록했습니다."
           msg += " <button type='button' onclick='location.reload(true)'>확인</button>";
         } else {
-          msg = "『" + $('#productgrp_name').val() + "』 카테고리 그룹 등록에 실패했습니다."
+          // msg = "『" + $('#productgrp_name').val() + "』 카테고리 그룹 등록에 실패했습니다."
+          msg = "『』 카테고리 그룹 등록에 실패했습니다."
         }
         $('#panel1').html(msg); // 메시지 출력
       },
@@ -76,7 +77,7 @@
     $('#panel1').show(); // 출력 */    
   }
 
-  function update_form(productgrp_no) {
+  function update_form(cart_no) {
     // $('#btn_close').attr("data-focus", "이동할 태그 지정");
     
     // var frm = $('#frm'); // id가 frm인 태그 검색
@@ -85,7 +86,7 @@
     $('#btn_send').on('click', update_proc);
         
     // var id = $('#id', frm).val(); // frm 폼에서 id가 'id'인 태그 검색
-    var params = 'productgrp_no=' + productgrp_no;
+    var params = 'cart_no=' + cart_no;
     // var params = 'contentsno=' + ${param.contentsno};
     // var params = $('#frm_create').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
     // alert('params: ' + params);
@@ -101,10 +102,10 @@
       data: params,      // 데이터
       success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
         var frm = $('#frm');
-        $('#productgrp_no', frm).val(rdata.productgrp_no);
-        $('#productgrp_name', frm).val(rdata.productgrp_name);
-        $('#productgrp_seqno', frm).val(rdata.productgrp_seqno);
-        $('#productgrp_visible', frm).val(rdata.productgrp_visible);
+        $('#cart_no', frm).val(rdata.productgrp_no);
+       // $('#productgrp_name', frm).val(rdata.productgrp_name);
+        $('#cart_cnt', frm).val(rdata.cart_cnt);
+        $('#cart_check', frm).val(rdata.cart_check);
 
         $('#btn_send').html('수정');
         
@@ -130,10 +131,10 @@
   }
 
   function cancel() {
-    $('#productgrp_no', frm).val(0);
-    $('#productgrp_name', frm).val('');
-    $('#productgrp_seqno', frm).val('');
-    $('#productgrp_visible', frm).val('Y');
+    $('#cart_no', frm).val(0);
+   // $('#productgrp_name', frm).val('');
+    $('#cart_cnt', frm).val(rdata.cart_cnt);
+    $('#cart_check', frm).val('Y');
 
     $('#btn_send').html('등록');
 
@@ -164,10 +165,12 @@
       data: params,      // 데이터
       success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
         if (rdata.cnt > 0) {
-          msg = "『" + $('#productgrp_name').val() + "』 카테고리 그룹을 수정했습니다."
+         // msg = "『" + $('#productgrp_name').val() + "』 카테고리 그룹을 수정했습니다."
+         msg = "『』 카트 상품을 수정했습니다."
           msg += " <button type='button' onclick='location.reload(true)'>확인</button>";
         } else {
-          msg = "『" + $('#productgrp_name').val() + "』 카테고리 그룹 수정에 실패했습니다."
+          // msg = "『" + $('#name').val() + "』 카테고리 그룹 수정에 실패했습니다."
+          msg = "『』 카트 상품 수정에 실패했습니다."
         }
         $('#panel1').html(msg); // 메시지 출력
       },
@@ -190,14 +193,14 @@
     $('#panel1').show(); // 출력 */    
   }
 
-  function delete_form(productgrp_no) {
+  function delete_form(cart_no) {
     // $('#btn_close').attr("data-focus", "이동할 태그 지정");
     
     // var frm = $('#frm'); // id가 frm인 태그 검색
     // $('#frm').attr('action', './read_ajax.do');
         
     // var id = $('#id', frm).val(); // frm 폼에서 id가 'id'인 태그 검색
-    var params = 'productgrp_no=' + productgrp_no;
+    var params = 'cart_no=' + cart_no;
     // var params = 'contentsno=' + ${param.contentsno};
     // var params = $('#frm_create').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
     // alert('params: ' + params);
@@ -212,13 +215,13 @@
       dataType: 'json', // 응답 형식: json, html, xml...
       data: params,      // 데이터
       success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
-        if (rdata.productgrp_name.length > 0) {
-          msg = "『" + rdata.name + "』 카테고리 그룹을 삭제하시겠습니까?<br>";
-          msg += "카테고리 그룹을 삭제하면 복구 할 수 없습니다.";
-          msg += " <button type=\"button\" onclick=\"delete_proc("+productgrp_no+", '"+rdata.productgrp_name+"')\">삭제 진행</button>";
+        if (rdata.cart_cnt > 0) {
+          msg = "『』 카트 상품을 삭제하시겠습니까?<br>";
+          msg += "카트 상품을  삭제하면 복구 할 수 없습니다.";
+          msg += " <button type=\"button\" onclick=\"delete_proc("+cart_no+")\">삭제 진행</button>";
           msg += " <button type='button' onclick='cancel()'>취소</button>";
         } else {
-          msg = "『" + rdata.productgrp_name + "』 카테고리 정보가 없습니다.";
+          msg = "『』 카트 상품 정보가 없습니다.";
           msg += " <button type='button' onclick='location.reload(true)'>확인</button>";
         }
         $('#panel1').html(msg); // 메시지 출력
@@ -242,7 +245,7 @@
     $('#panel1').show(); // 출력 */    
   }
 
-  function delete_proc(productgrp_no, productgrp_name) {
+  function delete_proc(cart_no, cart_cnt) {
     // alert('update_proc() execute.');
     // return;
     // $('#btn_close').attr("data-focus", "이동할 태그 지정");
@@ -250,7 +253,7 @@
     // var frm = $('#frm'); // id가 frm인 태그 검색
     // $('#frm').attr('action', './update_ajax.do');
     // var id = $('#id', frm).val(); // frm 폼에서 id가 'id'인 태그 검색
-    var params = 'productgrp_no=' + productgrp_no;
+    var params = 'cart_no=' + cart_no;
     // var params = 'categrpno=' + ${param.categrpno};
     // var params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
     // alert('params: ' + params);
@@ -266,10 +269,10 @@
       data: params,      // 데이터
       success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
         if (rdata.cnt > 0) {
-          msg = "『" + productgrp_name + "』 카테고리 그룹을 삭제했습니다."
+          msg = "『』 카테고리 그룹을 삭제했습니다."
           msg += " <button type='button' onclick='location.reload(true)'>확인</button>";
         } else {
-          msg = "『" + productgrp_name + "』 카테고리 그룹 삭제에 실패했습니다."
+          msg = "『』 카테고리 그룹 삭제에 실패했습니다."
         }
         $('#panel1').html(msg); // 메시지 출력
       },
@@ -304,17 +307,13 @@
   <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
     <FORM name='frm' id='frm' method='POST' action=''>
       <!-- <input type='hidden' name='lang' id='lang' value='en'> --> <!-- ko, en -->
-      <input type='hidden' name='productgrp_no' id='productgrp_no' value='0'>
+      <input type='hidden' name='cart_no' id='cart_no' value='0'>
               
-      <label>그룹 이름</label>
-      <input type='text' name='productgrp_name' id='productgrp_name' value='' required="required" style='width: 25%;'>
- 
-      <label>순서</label>
-      <input type='number' name='productgrp_seqno' id='productgrp_seqno' value='1' required="required" 
-                min='1' max='1000' step='1' style='width: 5%;'>
+      <label>수량</label>
+      <input type='text' name='cart_cnt' id='cart_cnt' value='1' required="required" style='width: 25%;'>
   
       <label>형식</label>
-      <select name='productgrp_visible' id='productgrp_visible'>
+      <select name='cart_check' id='productgrp_visible'>
         <option value='Y' selected="selected">Y</option>
         <option value='N'>N</option>
       </select>
@@ -338,7 +337,7 @@
     <thead>  
     <TR>
       <TH class="th_bs">순서</TH>
-      <TH class="th_bs">대분류명</TH>
+      <TH class="th_bs">수량</TH>
       <TH class="th_bs">등록일</TH>
       <TH class="th_bs">출력</TH>
       <TH class="th_bs">기타</TH>
@@ -346,29 +345,25 @@
     </thead>
     
     <tbody>
-    <c:forEach var="productgrpVO" items="${list}">
-      <c:set var="productgrp_no" value="${productgrpVO.productgrp_no }" />
+    <c:forEach var="cartVO" items="${list}">
+      <c:set var="cart_no" value="${cartVO.cart_no }" />
       <TR>
-        <TD class="td_bs">${productgrpVO.productgrp_seqno }</TD>
-      <TD class="td_bs_left"><A href="../product/list_by_productgrp_no_grid1.do?productgrp_no=${productgrpVO.productgrp_no }">${productgrpVO.productgrp_name }</A></TD>
-      <TD class="td_bs">${productgrpVO.productgrp_rdate.substring(0, 10) }</TD>
-      
-      <TD class="td_bs">
-        <c:choose>
-          <c:when test="${productgrpVO.productgrp_visible == 'Y'}">
-            <A href="./update_visible.do?productgrp_no=${productgrp_no }&productgrp_visible=${productgrpVO.productgrp_visible }"><IMG src="./images/open.png" style='width: 18px;'></A>
-          </c:when>
-          <c:otherwise>
-            <A href="./update_visible.do?productgrp_no=${productgrp_no }&productgrp_visible=${productgrpVO.productgrp_visible }"><IMG src="./images/close.png" style='width: 18px;'></A>
-          </c:otherwise>
-        </c:choose>
-      </TD>   
+        <TD class="td_bs">${cartVO.cart_no }</TD>
+        <TD class="td_bs">
+          <c:choose>
+            <c:when test="${cartVO.cart_check == 'Y'}">
+              <A href="./update_check.do?cart_no=${cart_no }&cart_check=${cartVO.cart_check }"><IMG src="./images/open.png" style='width: 18px;'></A>
+            </c:when>
+            <c:otherwise>
+              <A href="./update_check.do?cart_no=${cart_no }&cart_check=${cartVO.cart_check }"><IMG src="./images/close.png" style='width: 18px;'></A>
+            </c:otherwise>
+          </c:choose>
+        </TD> 
+        <TD class="td_bs">${cartVO.cart_rdate.substring(0, 10) }</TD>
         
         <TD class="td_bs">
-          <A href="javascript:update_form(${productgrp_no })" title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
-          <A href="javascript:delete_form(${productgrp_no })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>
-          <A href="./update_seqno_up.do?productgrp_no=${productgrp_no }" title="우선순위 상향"><span class="glyphicon glyphicon-arrow-up"></span></A>
-          <A href="./update_seqno_down.do?productgrp_no=${productgrp_no }" title="우선순위 하향"><span class="glyphicon glyphicon-arrow-down"></span></A>         
+          <A href="javascript:update_form(${cart_no })" title="수정"><span class="glyphicon glyphicon-pencil"></span></A>
+          <A href="javascript:delete_form(${cart_no })" title="삭제"><span class="glyphicon glyphicon-trash"></span></A>
         </TD>   
       </TR>   
     </c:forEach> 

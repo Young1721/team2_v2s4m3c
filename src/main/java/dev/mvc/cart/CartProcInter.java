@@ -13,4 +13,6 @@ public interface CartProcInter {
   public int update(CartVO cartVO);
   
   public int delete(int cart_no);
+  
+  public int update_cart_check(CartVO cartVO);
 }

@@ -344,6 +344,8 @@ tag += "</A>";
       <span class='menu_divide' >│</span>
       <A href='./reply.do?product_no=${product_no }&productgrp_no=${productgrp_no }'>답변</A>
       <span class='menu_divide' > | </span>
+      <A href='../cart/list.do?product_no=${product_no }&productgrp_no=${productgrp_no }'>카트</A>
+      <span class='menu_divide' > | </span>
     </c:if>  
     <A href='./list.do?productgrp_no=${productgrp_no }&product_word=${param.product_word }&nowPage=${param.nowPage}'>목록</A>
 
