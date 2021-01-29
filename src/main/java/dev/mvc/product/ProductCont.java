@@ -44,7 +44,7 @@ public class ProductCont {
   private MemberProcInter memberProc = null;
   
   public ProductCont() {
-    System.out.println("--> ProductCont created.");
+    System.out.println("-->상품 등록 ProductCont created.");
   }
   
 
