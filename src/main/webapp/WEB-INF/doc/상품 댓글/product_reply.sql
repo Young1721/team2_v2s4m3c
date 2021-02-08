@@ -71,8 +71,8 @@ WHERE replyno=1 AND passwd='1234';
    1
    
 -- ªË¡¶
-DELETE FROM product_reply
-WHERE product_reply_no=3;
+DELETE FROM reply
+WHERE replyno=1;
 
 COMMIT;
 
