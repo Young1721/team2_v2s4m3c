@@ -33,8 +33,14 @@
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete.do'>
       <input type='hidden' name='cart_no' id='cart_no' value='${cartVO.cart_no }'>
         
-      <label>수량</label>: ${cartVO.cart_cnt } &nbsp;
-      <label>출력 형식</label>: ${cartVO.cart_check } &nbsp;
+      <label>수량</label>
+      <input type='text' name='cart_cnt' id='cart_cnt' value='1' required="required" style='width: 25%;'>
+  
+      <label>형식</label>
+      <select name='cart_check' id='cart_check'>
+        <option value='Y' selected="selected">Y</option>
+        <option value='N'>N</option>
+      </select>
        
       <button type="submit" id='submit'>삭제</button>
       <button type="button" onclick="location.href='./list.do'">취소</button>

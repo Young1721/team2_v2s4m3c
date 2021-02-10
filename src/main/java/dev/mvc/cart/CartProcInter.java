@@ -6,9 +6,9 @@ public interface CartProcInter {
   
   public int create(CartVO cartVO);
   
-  public List<CartVO> list();
+  public List<CartVO> list(int member_no);
   
-  public CartVO read(int cart_no);
+  public int sumMoney(int member_no);
   
   public int update(CartVO cartVO);
   

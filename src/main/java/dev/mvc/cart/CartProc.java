@@ -22,15 +22,9 @@ public class CartProc implements CartProcInter{
   }
 
   @Override
-  public List<CartVO> list() {
-    List<CartVO> list = this.cartDAO.list();
+  public List<CartVO> list(int member_no) {
+    List<CartVO> list = this.cartDAO.list(member_no);
     return list;
-  }
-
-  @Override
-  public CartVO read(int cart_no) {
-    CartVO cartVO = this.cartDAO.read(cart_no);
-    return cartVO;
   }
 
   @Override
@@ -52,6 +46,12 @@ public class CartProc implements CartProcInter{
       cartVO.setCart_check("Y");
     }
     int cnt = this.cartDAO.update_cart_check(cartVO);
+    return cnt;
+  }
+
+  @Override
+  public int sumMoney(int member_no) {
+    int cnt = this.cartDAO.sumMoney(member_no);
     return cnt;
   }
 }

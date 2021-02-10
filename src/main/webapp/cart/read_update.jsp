@@ -36,10 +36,12 @@
       <input type='text' name='cart_cnt' id='cart_cnt' value='1' required="required" style='width: 25%;'>
   
       <label>형식</label>
-      <select name='cart_check' id='productgrp_visible'>
+      <select name='cart_check' id='cart_check'>
         <option value='Y' selected="selected">Y</option>
         <option value='N'>N</option>
       </select>
+      
+      
        
       <button type="submit" id='submit'>저장</button>
       <button type="button" onclick="location.href='./list.do'">취소</button>
