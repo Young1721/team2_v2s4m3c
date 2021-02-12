@@ -34,24 +34,9 @@ public class CartProc implements CartProcInter{
   }
 
   @Override
-  public int delete(int cart_no) {
-    int cnt = this.cartDAO.delete(cart_no);
-    return cnt;
-  }
-  
-  public int update_cart_check(CartVO cartVO) {
-    if(cartVO.getCart_check().equalsIgnoreCase("Y")) {
-      cartVO.setCart_check("N");  
-    } else {
-      cartVO.setCart_check("Y");
-    }
-    int cnt = this.cartDAO.update_cart_check(cartVO);
+  public int delete(CartVO cartVO) {
+    int cnt = this.cartDAO.delete(cartVO);
     return cnt;
   }
 
-  @Override
-  public int sumMoney(int member_no) {
-    int cnt = this.cartDAO.sumMoney(member_no);
-    return cnt;
-  }
 }

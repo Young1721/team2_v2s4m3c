@@ -8,11 +8,8 @@ public interface CartProcInter {
   
   public List<CartVO> list(int member_no);
   
-  public int sumMoney(int member_no);
-  
   public int update(CartVO cartVO);
   
-  public int delete(int cart_no);
+  public int delete(CartVO cartVO);
   
-  public int update_cart_check(CartVO cartVO);
 }

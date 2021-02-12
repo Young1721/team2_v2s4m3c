@@ -21,12 +21,8 @@ public class CartVO {
   private int product_no;
   /* 회원 번호 */
   private int member_no;
-  /* 카트 체크 */
-  private String cart_check;
   /* 카트 수량 */
   private int cart_cnt;
-  /* 카트 합 */
-  private int cart_tot;
   /* 카트 날짜 */
   private String cart_rdate;
   /////////////////////////////////////////////
@@ -41,7 +37,6 @@ public class CartVO {
   
   private String member_id;
   
-  private int money;
   
   
   public int getCart_no() {
@@ -63,24 +58,13 @@ public class CartVO {
   public void setMember_no(int member_no) {
     this.member_no = member_no;
   }
-  public String getCart_check() {
-    return cart_check;
-  }
-  public void setCart_check(String cart_check) {
-    this.cart_check = cart_check;
-  }
   public int getCart_cnt() {
     return cart_cnt;
   }
   public void setCart_cnt(int cart_cnt) {
     this.cart_cnt = cart_cnt;
   }
-  public int getCart_tot() {
-    return cart_tot;
-  }
-  public void setCart_tot(int cart_tot) {
-    this.cart_tot = cart_tot;
-  }
+
   public String getCart_rdate() {
     return cart_rdate;
   }
@@ -100,10 +84,10 @@ public class CartVO {
     this.product_cost = product_cost;
   }
   public String getProduct_thumb1() {
-    return product_file1;
+    return product_thumb1;
   }
   public void setProduct_thumb1(String product_thumb1) {
-    this.product_file1 = product_thumb1;
+    this.product_thumb1 = product_thumb1;
   }
   public String getMember_id() {
     return member_id;
@@ -111,12 +95,7 @@ public class CartVO {
   public void setMember_id(String member_id) {
     this.member_id = member_id;
   }
-  public int getMoney() {
-    return money;
-  }
-  public void setMoney(int money) {
-    this.money = money;
-  }
+
   public String getProduct_file1() {
     return product_file1;
   }
