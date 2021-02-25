@@ -16,7 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{product_file1}, #{product_thumb1}, #{product_size1}, sysdate)
   </insert>  -->
   <select id="list_all" resultType="ProductVO">
-    SELECT product_no, member_no, productgrp_no, product_name, product_brand, product_origin, product_frequency, product_description, product_cost, product_ml, 
+    SELECT product_no, member_no, productgrp_no, product_name, product_brand, product_origin, product_frequency, 
+    product_description, product_cost, product_ml, 
     product_word, product_passwd,
     product_file1, product_thumb1, product_size1, product_rdate
     FROM product
@@ -24,25 +25,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   
   <select id= "list_by_productgrp_no" resultType= "ProductVO">
-    SELECT product_no, member_no, productgrp_no, product_name, product_brand, product_origin, product_frequency, product_description, product_cost, product_ml, 
+    SELECT product_no, member_no, productgrp_no, product_name, product_brand, product_origin, product_frequency, 
+    product_description, product_cost, product_ml, 
     product_word, product_passwd,
     product_file1, product_thumb1, product_size1, product_rdate
     FROM product
     WHERE productgrp_no=#{productgrp_no}
     ORDER BY product_no ASC
   </select>
-  
+  <!-- 조회 -->
   <select id="read" resultType="ProductVO" parameterType="int">
-    SELECT product_no, member_no, productgrp_no, product_name, product_brand, product_origin, product_frequency, product_description, product_cost, product_ml, 
+    SELECT product_no, member_no, productgrp_no, product_name, product_brand, product_origin, 
+    product_frequency, product_description, product_cost, product_ml, 
     product_word, product_passwd,
     product_file1, product_thumb1, product_size1, product_rdate
     FROM product
     WHERE product_no = #{product_no}
   </select>
+  <!-- 수정 -->
   <update id="update" parameterType="ProductVO">
     UPDATE product
-    SET product_name=#{product_name}, product_brand=#{product_brand}, product_origin=#{product_origin}, product_frequency=#{product_frequency},
-    product_description=#{product_description}, product_cost= #{product_cost}, product_ml = #{product_ml}, product_word = #{product_word}
+    SET product_name=#{product_name}, product_brand=#{product_brand}, product_origin=#{product_origin},
+     product_frequency=#{product_frequency},
+    product_description=#{product_description}, product_cost= #{product_cost}, product_ml = #{product_ml},
+     product_word = #{product_word}
     WHERE product_no = #{product_no}
   </update>
   
@@ -68,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM product
   </select>
   
+  <!-- 등록 -->
   <insert id="create" parameterType="ProductVO">
     <selectKey keyProperty="product_no" resultType="int" order="BEFORE">
       SELECT product_seq.nextval FROM dual
@@ -76,7 +83,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                  product_frequency, product_description, product_cost, product_ml, product_word, 
                                  product_passwd, product_file1, product_thumb1, product_size1, product_rdate,
                                  product_grpno, product_indent, product_ansnum)
-    VALUES(#{product_no}, #{member_no}, #{productgrp_no}, #{product_name}, #{product_brand}, #{product_origin}, #{product_frequency},
+    VALUES(#{product_no}, #{member_no}, #{productgrp_no}, #{product_name}, #{product_brand}, #{product_origin},
+               #{product_frequency},
                #{product_description}, #{product_cost}, #{product_ml}, #{product_word}, #{product_passwd},
                #{product_file1}, #{product_thumb1}, #{product_size1}, sysdate,
                 (SELECT NVL(MAX(product_grpno), 0) + 1 FROM product), 0, 0)
@@ -110,7 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      SELECT COUNT(*) as product_cnt
      FROM product
      <choose>
-       <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
+       <when test="product_word == null or product_word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
          WHERE productgrp_no=#{productgrp_no}
        </when>
        <otherwise> <!-- 검색하는 경우의 레코드 갯수 -->
@@ -121,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      </choose>
    </select>    
   
-     <!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 + 답변형 -->
+     <!-- 상품별 검색 목록 + 페이징 + 메인 이미지 + 답변형 -->
    <select id="list_by_productgrp_no_search_paging_join" 
               resultType="Product_MemberVO" parameterType="HashMap">
      SELECT product_no, member_no, productgrp_no, product_name, product_brand, product_origin, 
@@ -143,7 +151,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                  p.product_grpno, p.product_indent, p.product_ansnum, m.member_id as mid
                           FROM product p, member m
                           <choose>
-                            <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
+                            <when test="product_word == null or product_word == ''"> <!-- 검색하지 않는 경우 -->
                               WHERE productgrp_no=#{productgrp_no} AND p.member_no = m.member_no
                             </when>
                             <otherwise>

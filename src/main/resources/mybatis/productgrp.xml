@@ -16,15 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   #{}: ? 동일
   #{name}: public String getName() 자동 호출
    --> 
+   <!-- 등록 -->
    <insert id="create" parameterType="ProductgrpVO">
     INSERT INTO productgrp(productgrp_no, productgrp_name, productgrp_seqno, productgrp_visible, productgrp_rdate)
     VALUES(productgrp_seq.nextval, #{productgrp_name}, #{productgrp_seqno}, #{productgrp_visible}, sysdate)
   </insert> 
   
-  <!-- 
-  레코드 갯수 만큼 CategrpVO 객체를 만들어 ArrayList에 저장하여 리턴,
-  List<ProductgrpVO> list = new ArrayList<ProductgrpVO>(); 
-  -->
+  <!-- 목록-->
   <select id="list_productgrp_seqno_asc" resultType="ProductgrpVO">
     SELECT productgrp_no, productgrp_name, productgrp_seqno, productgrp_visible, productgrp_rdate
     FROM productgrp

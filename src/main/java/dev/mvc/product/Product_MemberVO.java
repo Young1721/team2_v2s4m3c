@@ -48,6 +48,8 @@ public class Product_MemberVO {
     private String product_description = "";;
     /** 가격 */
     private long product_cost;
+    /** 검색 */
+    private String product_word = "";
     /** 용량 */
     private String product_ml = "";
     /** 비밀번호 */
@@ -150,6 +152,14 @@ public class Product_MemberVO {
 
     public void setProduct_description(String product_description) {
       this.product_description = product_description;
+    }
+
+    public String getProduct_word() {
+      return product_word;
+    }
+
+    public void setProduct_word(String product_word) {
+      this.product_word = product_word;
     }
 
     public long getProduct_cost() {

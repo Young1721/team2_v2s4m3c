@@ -30,7 +30,7 @@ public interface ProductProcInter {
 
   public int search_count(HashMap<String, Object> hashMap);
 
-  public String pagingBox(String listFile, int categrpno, int search_count, int nowPage, String word);
+  public String pagingBox(String listFile, int productgrp_no, int search_count, int nowPage, String word);
 
   public int increaseAnsnum(HashMap<String, Object> map);
 

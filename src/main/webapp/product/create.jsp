@@ -61,7 +61,7 @@
         <div class="col-md-12">
           <input type='text' class="form-control" name='product_name' value='처음처럼' placeholder="제목" required="required" style='width: 80%;'>
         </div>
-      </div>   
+   </div>   
       
       <div class="form-group">   
         <div class="col-md-12">

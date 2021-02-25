@@ -6,54 +6,56 @@ import java.util.List;
 public interface ProductDAOInter {
   
   /**
-   * 상품 등록
-   * @param reviewVO
-   * @return
-   */
+  * 상품 등록
+  * <insert id="create" parameterType="ProductVO">
+  * @return
+  */
   public int create(ProductVO productVO);
   
   /**
-   * 모든 카테고리에 등록된 상품 목록
+   * 상품 전체 목록
    * @return
    */
   public List<ProductVO> list_all();
   
   /**
-   * 특정 카테고리에 등록된 상품 목록
+   * 상품 목록
+   * 
    * @return
    */
   public List<ProductVO> list_by_productgrp_no(int productgrp_no);
   
-  /**
-   * 카테고리별 검색 레코드 갯수
-   * @param hashMap
-   * @return
-   */
+ /**
+  * 상품 조회
+  * <select id="read" resultType="ProductVO" parameterType="int">
+  * @param product_no
+  * @return
+  */
   public ProductVO read(int product_no);
   
   /**
-   * 수정 처리
+   * �닔�젙 泥섎━
    * @param reviewVO
    * @return
    */
   public int update(ProductVO productVO);
   
   /**
-   * 패스워드 검사
+   * �뙣�뒪�썙�뱶 寃��궗
    * @param hashMap
    * @return
    */
   public int passwd_check(HashMap<String, Object> hashMap);
   
   /**
-   * 삭제
+   * �궘�젣
    * @param review_no
    * @return
    */
   public int delete(int product_no);
   
   /**
-   * 이미지 변경
+   * �씠誘몄� 蹂�寃�
    * @param reviewVO
    * @return
    */
@@ -66,7 +68,14 @@ public interface ProductDAOInter {
   public int increaseAnsnum(HashMap<String, Object> map);
 
   public int reply(ProductVO productVO);
- 
+  
+ /**
+  * 상품 목록
+  * <select id="list_by_productgrp_no_search_paging_join" 
+              resultType="Product_MemberVO" parameterType="HashMap">
+  * @param map
+  * @return
+  */
   public List<Product_MemberVO> list_by_productgrp_no_search_paging_join(HashMap<String, Object> map);
   
   public int increaseReplycnt(int product_no);

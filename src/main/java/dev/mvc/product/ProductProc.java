@@ -109,15 +109,15 @@ public class ProductProc implements ProductProcInter{
   
   @Override
   public String pagingBox(String listFile, int productgrp_no, int search_count, int nowPage, String product_word){ 
-    int totalPage = (int)(Math.ceil((double)search_count/Product.RECORD_PER_PAGE)); // ��ü ������  
+    int totalPage = (int)(Math.ceil((double)search_count/Product.RECORD_PER_PAGE)); // 占쏙옙체 占쏙옙占쏙옙占쏙옙  
     
-    int totalGrp = (int)(Math.ceil((double)totalPage/Product.PAGE_PER_BLOCK));// ��ü �׷� 
+    int totalGrp = (int)(Math.ceil((double)totalPage/Product.PAGE_PER_BLOCK));// 占쏙옙체 占쌓뤄옙 
     
-    int nowGrp = (int)(Math.ceil((double)nowPage/Product.PAGE_PER_BLOCK));    // ���� �׷� 
+    int nowGrp = (int)(Math.ceil((double)nowPage/Product.PAGE_PER_BLOCK));    // 占쏙옙占쏙옙 占쌓뤄옙 
     
-    int startPage = ((nowGrp - 1) * Product.PAGE_PER_BLOCK) + 1; // Ư�� �׷��� ������ ��� ����  
+    int startPage = ((nowGrp - 1) * Product.PAGE_PER_BLOCK) + 1; // 특占쏙옙 占쌓뤄옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙  
     
-    int endPage = (nowGrp * Product.PAGE_PER_BLOCK);             // Ư�� �׷��� ������ ��� ����   
+    int endPage = (nowGrp * Product.PAGE_PER_BLOCK);             // 특占쏙옙 占쌓뤄옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙   
      
     StringBuffer str = new StringBuffer(); 
      
@@ -132,8 +132,8 @@ public class ProductProc implements ProductProcInter{
     str.append("    border: 1px;"); 
     str.append("    border-style: solid;"); 
     str.append("    border-color: #cccccc;"); 
-    str.append("    padding:1px 6px 1px 6px; /*��, ������, �Ʒ�, ����*/"); 
-    str.append("    margin:1px 2px 1px 2px; /*��, ������, �Ʒ�, ����*/"); 
+    str.append("    padding:1px 6px 1px 6px; /*占쏙옙, 占쏙옙占쏙옙占쏙옙, 占싣뤄옙, 占쏙옙占쏙옙*/"); 
+    str.append("    margin:1px 2px 1px 2px; /*占쏙옙, 占쏙옙占쏙옙占쏙옙, 占싣뤄옙, 占쏙옙占쏙옙*/"); 
     str.append("  }"); 
     str.append("  .span_box_2{"); 
     str.append("    text-align: center;");    
@@ -143,45 +143,45 @@ public class ProductProc implements ProductProcInter{
     str.append("    border: 1px;"); 
     str.append("    border-style: solid;"); 
     str.append("    border-color: #cccccc;"); 
-    str.append("    padding:1px 6px 1px 6px; /*��, ������, �Ʒ�, ����*/"); 
-    str.append("    margin:1px 2px 1px 2px; /*��, ������, �Ʒ�, ����*/"); 
+    str.append("    padding:1px 6px 1px 6px; /*占쏙옙, 占쏙옙占쏙옙占쏙옙, 占싣뤄옙, 占쏙옙占쏙옙*/"); 
+    str.append("    margin:1px 2px 1px 2px; /*占쏙옙, 占쏙옙占쏙옙占쏙옙, 占싣뤄옙, 占쏙옙占쏙옙*/"); 
     str.append("  }"); 
     str.append("</style>"); 
     str.append("<DIV id='paging'>"); 
-//    str.append("���� ������: " + nowPage + " / " + totalPage + "  "); 
+//    str.append("占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙: " + nowPage + " / " + totalPage + "  "); 
  
-    // ���� 10�� �������� �̵�
+    // 占쏙옙占쏙옙 10占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占싱듸옙
     // nowGrp: 1 (1 ~ 10 page)
     // nowGrp: 2 (11 ~ 20 page)
     // nowGrp: 3 (21 ~ 30 page) 
-    // ���� 2�׷��� ���: (2 - 1) * 10 = 1�׷��� ������ ������ 10
-    // ���� 3�׷��� ���: (3 - 1) * 10 = 2�׷��� ������ ������ 20
+    // 占쏙옙占쏙옙 2占쌓뤄옙占쏙옙 占쏙옙占�: (2 - 1) * 10 = 1占쌓뤄옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 10
+    // 占쏙옙占쏙옙 3占쌓뤄옙占쏙옙 占쏙옙占�: (3 - 1) * 10 = 2占쌓뤄옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 20
     int _nowPage = (nowGrp-1) * Product.PAGE_PER_BLOCK;  
     if (nowGrp >= 2){ 
-      str.append("<span class='span_box_1'><A href='"+listFile+"?&product_word="+product_word+"&nowPage="+_nowPage+"&productgrp_no="+productgrp_no+"'>����</A></span>"); 
+      str.append("<span class='span_box_1'><A href='"+listFile+"?&product_word="+product_word+"&nowPage="+_nowPage+"&productgrp_no="+productgrp_no+"'>이전</A></span>"); 
     } 
  
-    // �߾��� ������ ���
+    // 占쌩억옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占�
     for(int i=startPage; i<=endPage; i++){ 
-      if (i > totalPage){ // ������ �������� �Ѿ�ٸ� ���� ��� ����
+      if (i > totalPage){ // 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占싼어갔占쌕몌옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙
         break; 
       } 
   
-      if (nowPage == i){ // �������� ������������ ���ٸ� CSS ����(������ ��)
-        str.append("<span class='span_box_2'>"+i+"</span>"); // ���� ������, ���� 
+      if (nowPage == i){ // 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쌕몌옙 CSS 占쏙옙占쏙옙(占쏙옙占쏙옙占쏙옙 占쏙옙)
+        str.append("<span class='span_box_2'>"+i+"</span>"); // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙, 占쏙옙占쏙옙 
       }else{
-        // ���� �������� �ƴ� �������� �̵��� �����ϵ��� ��ũ�� ����
+        // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占싣댐옙 占쏙옙占쏙옙占쏙옙占쏙옙 占싱듸옙占쏙옙 占쏙옙占쏙옙占싹듸옙占쏙옙 占쏙옙크占쏙옙 占쏙옙占쏙옙
         str.append("<span class='span_box_1'><A href='"+listFile+"?product_word="+product_word+"&nowPage="+i+"&productgrp_no="+productgrp_no+"'>"+i+"</A></span>");   
       } 
     } 
  
-    // 10�� ���� �������� �̵�
+    // 10占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占싱듸옙
     // nowGrp: 1 (1 ~ 10 page),  nowGrp: 2 (11 ~ 20 page),  nowGrp: 3 (21 ~ 30 page) 
-    // ���� 1�׷��� ���: (1 * 10) + 1 = 2�׷��� ���������� 11
-    // ���� 2�׷��� ���: (2 * 10) + 1 = 3�׷��� ���������� 21
+    // 占쏙옙占쏙옙 1占쌓뤄옙占쏙옙 占쏙옙占�: (1 * 10) + 1 = 2占쌓뤄옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 11
+    // 占쏙옙占쏙옙 2占쌓뤄옙占쏙옙 占쏙옙占�: (2 * 10) + 1 = 3占쌓뤄옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 21
     _nowPage = (nowGrp * Product.PAGE_PER_BLOCK)+1;  
     if (nowGrp < totalGrp){ 
-      str.append("<span class='span_box_1'><A href='"+listFile+"?&product_word="+product_word+"&nowPage="+_nowPage+"&productgrp_no="+productgrp_no+"'>����</A></span>"); 
+      str.append("<span class='span_box_1'><A href='"+listFile+"?&product_word="+product_word+"&nowPage="+_nowPage+"&productgrp_no="+productgrp_no+"'></A></span>"); 
     } 
     str.append("</DIV>"); 
      
@@ -202,26 +202,11 @@ public class ProductProc implements ProductProcInter{
 
   @Override
   public List<Product_MemberVO> list_by_productgrp_no_search_paging_join(HashMap<String, Object> map) {
-    /* 
-    ���������� ����� ���� ���ڵ� ��ȣ ��� ���ذ�, nowPage�� 1���� ����
-    1 ������ ���� rownum: nowPage = 1, (1 - 1) * 10 --> 0 
-    2 ������ ���� rownum: nowPage = 2, (2 - 1) * 10 --> 10
-    3 ������ ���� rownum: nowPage = 3, (3 - 1) * 10 --> 20
-    */
+
     int beginOfPage = ((Integer)map.get("nowPage") - 1) * Product.RECORD_PER_PAGE;
-   
-    // ���� rownum ����
-    // 1 ������ = 0 + 1, 2 ������ = 10 + 1, 3 ������ = 20 + 1 
     int startNum = beginOfPage + 1;
-    
-    //  ���� rownum 
-    // 1 ������ = 0 + 10, 2 ������ = 0 + 20, 3 ������ = 0 + 30
     int endNum = beginOfPage + Product.RECORD_PER_PAGE;   
-    /*
-    1 ������: WHERE r >= 1 AND r <= 10
-    2 ������: WHERE r >= 11 AND r <= 20
-    3 ������: WHERE r >= 21 AND r <= 30
-    */
+
     map.put("startNum", startNum);
     map.put("endNum", endNum);
    

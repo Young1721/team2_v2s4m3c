@@ -3,9 +3,19 @@ package dev.mvc.productgrp;
 import java.util.List;
 
 public interface ProductgrpDAOInter {
-  
+
+  /**
+  * 상품그룹 등록
+  * <insert id="create" parameterType="ProductgrpVO">
+  * @return
+  */
   public int create(ProductgrpVO productgrpVO);
   
+  /**
+  * 상품그룹 목록
+  * <select id="list_productgrp_seqno_asc" resultType="ProductgrpVO">
+  * @return
+  */
   public List<ProductgrpVO> list_productgrp_seqno_asc();
   
   public ProductgrpVO read(int productgrp_no);

@@ -44,10 +44,10 @@ public class ProductCont {
   private MemberProcInter memberProc = null;
 
    /**
-   * 
-   * @param productgrp_no
-   * @return
-   */
+    * 
+    * @param productgrp_no
+    * @return
+    */
   @RequestMapping(value = "/product/create.do", method = RequestMethod.GET)
   public ModelAndView create(int productgrp_no) {
     ModelAndView mav = new ModelAndView();
@@ -133,7 +133,7 @@ public class ProductCont {
    */
   @RequestMapping(value = "/product/list.do", 
                                        method = RequestMethod.GET)
-  public ModelAndView list_by_cateno_search_paging(
+  public ModelAndView list_by_productgrp_no_search_paging(
       @RequestParam(value="productgrp_no", defaultValue="1") int productgrp_no,
       @RequestParam(value="product_word", defaultValue="") String product_word,
       @RequestParam(value="nowPage", defaultValue="1") int nowPage
@@ -187,7 +187,7 @@ public class ProductCont {
   }
   
   /**
-   * µî·ÏÆû http://localhost:9090/team2/product/raad.do
+   * Á¶È¸Æû http://localhost:9090/team2/product/read.do
    * @param product_no
    * @return
    */
